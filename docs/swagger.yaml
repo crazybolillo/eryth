@@ -1,0 +1,47 @@
+definitions:
+  handler.createEndpointRequest:
+    properties:
+      codecs:
+        items:
+          type: string
+        type: array
+      context:
+        type: string
+      id:
+        type: string
+      max_contacts:
+        type: integer
+      password:
+        type: string
+      realm:
+        type: string
+      transport:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API to perform configuration management on Asterisk servers.
+  title: Asterisk Administration API
+  version: "1.0"
+paths:
+  /endpoint:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Endpoint's information
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/handler.createEndpointRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Create a new endpoint.
+swagger: "2.0"

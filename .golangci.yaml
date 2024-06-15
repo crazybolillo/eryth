@@ -1,0 +1,4 @@
+linters-settings:
+  errcheck:
+    exclude-functions:
+      - (github.com/jackc/pgx/v5.Tx).Rollback
