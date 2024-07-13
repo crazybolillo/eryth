@@ -1,0 +1,10 @@
+docs/
+dist/
+.github/
+
+.dockerignore
+.gitignore
+
+Makefile
+README.md
+LICENSE
