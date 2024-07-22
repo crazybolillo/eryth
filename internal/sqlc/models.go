@@ -1565,6 +1565,7 @@ type AlembicVersion struct {
 }
 
 type Cdr struct {
+	ID          int64
 	Accountcode pgtype.Text
 	Src         pgtype.Text
 	Dst         pgtype.Text

@@ -272,6 +272,7 @@ CREATE TABLE public.alembic_version (
 );
 
 CREATE TABLE public.cdr (
+    id BIGSERIAL PRIMARY KEY,
     accountcode character varying(80),
     src character varying(80),
     dst character varying(80),
