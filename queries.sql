@@ -15,3 +15,12 @@ INSERT INTO ps_endpoints
     (id, transport, aors, auth, context, disallow, allow)
 VALUES
     ($1, $2, $1, $1, $3, 'all', $4);
+
+-- name: DeleteEndpoint :exec
+DELETE FROM ps_endpoints WHERE id = $1;
+
+-- name: DeleteAOR :exec
+DELETE FROM ps_aors WHERE id = $1;
+
+-- name: DeleteAuth :exec
+DELETE FROM ps_auths WHERE id = $1;

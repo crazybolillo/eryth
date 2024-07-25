@@ -11,6 +11,33 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const deleteAOR = `-- name: DeleteAOR :exec
+DELETE FROM ps_aors WHERE id = $1
+`
+
+func (q *Queries) DeleteAOR(ctx context.Context, id string) error {
+	_, err := q.db.Exec(ctx, deleteAOR, id)
+	return err
+}
+
+const deleteAuth = `-- name: DeleteAuth :exec
+DELETE FROM ps_auths WHERE id = $1
+`
+
+func (q *Queries) DeleteAuth(ctx context.Context, id string) error {
+	_, err := q.db.Exec(ctx, deleteAuth, id)
+	return err
+}
+
+const deleteEndpoint = `-- name: DeleteEndpoint :exec
+DELETE FROM ps_endpoints WHERE id = $1
+`
+
+func (q *Queries) DeleteEndpoint(ctx context.Context, id string) error {
+	_, err := q.db.Exec(ctx, deleteEndpoint, id)
+	return err
+}
+
 const newAOR = `-- name: NewAOR :exec
 INSERT INTO ps_aors
     (id, max_contacts)
