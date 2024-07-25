@@ -41,6 +41,7 @@ func serve(ctx context.Context) error {
 	r := chi.NewRouter()
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: strings.Split(os.Getenv("CORS_ALLOWED_ORIGINS"), ","),
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 	}))
 	r.Use(middleware.AllowContentEncoding("application/json"))
 
