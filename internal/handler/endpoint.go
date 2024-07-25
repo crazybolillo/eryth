@@ -29,6 +29,7 @@ type createEndpointRequest struct {
 func (e *Endpoint) Router() chi.Router {
 	r := chi.NewRouter()
 	r.Post("/", e.create)
+	r.Delete("/{id}", e.delete)
 
 	return r
 }
@@ -39,6 +40,7 @@ func (e *Endpoint) Router() chi.Router {
 // @Success 204
 // @Failure 400
 // @Failure 500
+// @Tags endpoints
 // @Router /endpoint [post]
 func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
@@ -89,6 +91,56 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 		ID:          payload.ID,
 		MaxContacts: db.Int4(payload.MaxContacts),
 	})
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = tx.Commit(r.Context())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// @Summary Delete an endpoint and its associated resources.
+// @Param id path string true "ID of the endpoint to be deleted"
+// @Success 204
+// @Failure 400
+// @Failure 500
+// @Tags endpoints
+// @Router /endpoint/{id} [delete]
+func (e *Endpoint) delete(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if id == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	tx, err := e.Begin(r.Context())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer tx.Rollback(r.Context())
+
+	queries := sqlc.New(tx)
+
+	err = queries.DeleteEndpoint(r.Context(), id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = queries.DeleteAOR(r.Context(), id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = queries.DeleteAuth(r.Context(), id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
