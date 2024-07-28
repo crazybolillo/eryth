@@ -24,3 +24,10 @@ DELETE FROM ps_aors WHERE id = $1;
 
 -- name: DeleteAuth :exec
 DELETE FROM ps_auths WHERE id = $1;
+
+-- name: ListEndpoints :many
+SELECT
+    id, context, transport
+FROM
+    ps_endpoints
+LIMIT $1;

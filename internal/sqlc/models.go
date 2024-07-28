@@ -37,8 +37,8 @@ func (e *AstBoolValues) Scan(src interface{}) error {
 }
 
 type NullAstBoolValues struct {
-	AstBoolValues AstBoolValues
-	Valid         bool // Valid is true if AstBoolValues is not NULL
+	AstBoolValues AstBoolValues `json:"ast_bool_values"`
+	Valid         bool          `json:"valid"` // Valid is true if AstBoolValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -80,8 +80,8 @@ func (e *IaxEncryptionValues) Scan(src interface{}) error {
 }
 
 type NullIaxEncryptionValues struct {
-	IaxEncryptionValues IaxEncryptionValues
-	Valid               bool // Valid is true if IaxEncryptionValues is not NULL
+	IaxEncryptionValues IaxEncryptionValues `json:"iax_encryption_values"`
+	Valid               bool                `json:"valid"` // Valid is true if IaxEncryptionValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -123,8 +123,8 @@ func (e *IaxRequirecalltokenValues) Scan(src interface{}) error {
 }
 
 type NullIaxRequirecalltokenValues struct {
-	IaxRequirecalltokenValues IaxRequirecalltokenValues
-	Valid                     bool // Valid is true if IaxRequirecalltokenValues is not NULL
+	IaxRequirecalltokenValues IaxRequirecalltokenValues `json:"iax_requirecalltoken_values"`
+	Valid                     bool                      `json:"valid"` // Valid is true if IaxRequirecalltokenValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -166,8 +166,8 @@ func (e *IaxTransferValues) Scan(src interface{}) error {
 }
 
 type NullIaxTransferValues struct {
-	IaxTransferValues IaxTransferValues
-	Valid             bool // Valid is true if IaxTransferValues is not NULL
+	IaxTransferValues IaxTransferValues `json:"iax_transfer_values"`
+	Valid             bool              `json:"valid"` // Valid is true if IaxTransferValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -212,8 +212,8 @@ func (e *MohModeValues) Scan(src interface{}) error {
 }
 
 type NullMohModeValues struct {
-	MohModeValues MohModeValues
-	Valid         bool // Valid is true if MohModeValues is not NULL
+	MohModeValues MohModeValues `json:"moh_mode_values"`
+	Valid         bool          `json:"valid"` // Valid is true if MohModeValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -256,8 +256,8 @@ func (e *Pjsip100relValuesV2) Scan(src interface{}) error {
 }
 
 type NullPjsip100relValuesV2 struct {
-	Pjsip100relValuesV2 Pjsip100relValuesV2
-	Valid               bool // Valid is true if Pjsip100relValuesV2 is not NULL
+	Pjsip100relValuesV2 Pjsip100relValuesV2 `json:"pjsip_100rel_values_v2"`
+	Valid               bool                `json:"valid"` // Valid is true if Pjsip100relValuesV2 is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -299,8 +299,8 @@ func (e *PjsipAuthTypeValuesV2) Scan(src interface{}) error {
 }
 
 type NullPjsipAuthTypeValuesV2 struct {
-	PjsipAuthTypeValuesV2 PjsipAuthTypeValuesV2
-	Valid                 bool // Valid is true if PjsipAuthTypeValuesV2 is not NULL
+	PjsipAuthTypeValuesV2 PjsipAuthTypeValuesV2 `json:"pjsip_auth_type_values_v2"`
+	Valid                 bool                  `json:"valid"` // Valid is true if PjsipAuthTypeValuesV2 is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -348,8 +348,8 @@ func (e *PjsipCidPrivacyValues) Scan(src interface{}) error {
 }
 
 type NullPjsipCidPrivacyValues struct {
-	PjsipCidPrivacyValues PjsipCidPrivacyValues
-	Valid                 bool // Valid is true if PjsipCidPrivacyValues is not NULL
+	PjsipCidPrivacyValues PjsipCidPrivacyValues `json:"pjsip_cid_privacy_values"`
+	Valid                 bool                  `json:"valid"` // Valid is true if PjsipCidPrivacyValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -391,8 +391,8 @@ func (e *PjsipConnectedLineMethodValues) Scan(src interface{}) error {
 }
 
 type NullPjsipConnectedLineMethodValues struct {
-	PjsipConnectedLineMethodValues PjsipConnectedLineMethodValues
-	Valid                          bool // Valid is true if PjsipConnectedLineMethodValues is not NULL
+	PjsipConnectedLineMethodValues PjsipConnectedLineMethodValues `json:"pjsip_connected_line_method_values"`
+	Valid                          bool                           `json:"valid"` // Valid is true if PjsipConnectedLineMethodValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -434,8 +434,8 @@ func (e *PjsipDirectMediaGlareMitigationValues) Scan(src interface{}) error {
 }
 
 type NullPjsipDirectMediaGlareMitigationValues struct {
-	PjsipDirectMediaGlareMitigationValues PjsipDirectMediaGlareMitigationValues
-	Valid                                 bool // Valid is true if PjsipDirectMediaGlareMitigationValues is not NULL
+	PjsipDirectMediaGlareMitigationValues PjsipDirectMediaGlareMitigationValues `json:"pjsip_direct_media_glare_mitigation_values"`
+	Valid                                 bool                                  `json:"valid"` // Valid is true if PjsipDirectMediaGlareMitigationValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -477,8 +477,8 @@ func (e *PjsipDtlsSetupValues) Scan(src interface{}) error {
 }
 
 type NullPjsipDtlsSetupValues struct {
-	PjsipDtlsSetupValues PjsipDtlsSetupValues
-	Valid                bool // Valid is true if PjsipDtlsSetupValues is not NULL
+	PjsipDtlsSetupValues PjsipDtlsSetupValues `json:"pjsip_dtls_setup_values"`
+	Valid                bool                 `json:"valid"` // Valid is true if PjsipDtlsSetupValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -522,8 +522,8 @@ func (e *PjsipDtmfModeValuesV3) Scan(src interface{}) error {
 }
 
 type NullPjsipDtmfModeValuesV3 struct {
-	PjsipDtmfModeValuesV3 PjsipDtmfModeValuesV3
-	Valid                 bool // Valid is true if PjsipDtmfModeValuesV3 is not NULL
+	PjsipDtmfModeValuesV3 PjsipDtmfModeValuesV3 `json:"pjsip_dtmf_mode_values_v3"`
+	Valid                 bool                  `json:"valid"` // Valid is true if PjsipDtmfModeValuesV3 is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -566,8 +566,8 @@ func (e *PjsipIncomingCallOfferPrefValues) Scan(src interface{}) error {
 }
 
 type NullPjsipIncomingCallOfferPrefValues struct {
-	PjsipIncomingCallOfferPrefValues PjsipIncomingCallOfferPrefValues
-	Valid                            bool // Valid is true if PjsipIncomingCallOfferPrefValues is not NULL
+	PjsipIncomingCallOfferPrefValues PjsipIncomingCallOfferPrefValues `json:"pjsip_incoming_call_offer_pref_values"`
+	Valid                            bool                             `json:"valid"` // Valid is true if PjsipIncomingCallOfferPrefValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -609,8 +609,8 @@ func (e *PjsipMediaEncryptionValues) Scan(src interface{}) error {
 }
 
 type NullPjsipMediaEncryptionValues struct {
-	PjsipMediaEncryptionValues PjsipMediaEncryptionValues
-	Valid                      bool // Valid is true if PjsipMediaEncryptionValues is not NULL
+	PjsipMediaEncryptionValues PjsipMediaEncryptionValues `json:"pjsip_media_encryption_values"`
+	Valid                      bool                       `json:"valid"` // Valid is true if PjsipMediaEncryptionValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -655,8 +655,8 @@ func (e *PjsipOutgoingCallOfferPrefValues) Scan(src interface{}) error {
 }
 
 type NullPjsipOutgoingCallOfferPrefValues struct {
-	PjsipOutgoingCallOfferPrefValues PjsipOutgoingCallOfferPrefValues
-	Valid                            bool // Valid is true if PjsipOutgoingCallOfferPrefValues is not NULL
+	PjsipOutgoingCallOfferPrefValues PjsipOutgoingCallOfferPrefValues `json:"pjsip_outgoing_call_offer_pref_values"`
+	Valid                            bool                             `json:"valid"` // Valid is true if PjsipOutgoingCallOfferPrefValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -698,8 +698,8 @@ func (e *PjsipRedirectMethodValues) Scan(src interface{}) error {
 }
 
 type NullPjsipRedirectMethodValues struct {
-	PjsipRedirectMethodValues PjsipRedirectMethodValues
-	Valid                     bool // Valid is true if PjsipRedirectMethodValues is not NULL
+	PjsipRedirectMethodValues PjsipRedirectMethodValues `json:"pjsip_redirect_method_values"`
+	Valid                     bool                      `json:"valid"` // Valid is true if PjsipRedirectMethodValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -741,8 +741,8 @@ func (e *PjsipT38udptlEcValues) Scan(src interface{}) error {
 }
 
 type NullPjsipT38udptlEcValues struct {
-	PjsipT38udptlEcValues PjsipT38udptlEcValues
-	Valid                 bool // Valid is true if PjsipT38udptlEcValues is not NULL
+	PjsipT38udptlEcValues PjsipT38udptlEcValues `json:"pjsip_t38udptl_ec_values"`
+	Valid                 bool                  `json:"valid"` // Valid is true if PjsipT38udptlEcValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -784,8 +784,8 @@ func (e *PjsipTaskprocessorOverloadTriggerValues) Scan(src interface{}) error {
 }
 
 type NullPjsipTaskprocessorOverloadTriggerValues struct {
-	PjsipTaskprocessorOverloadTriggerValues PjsipTaskprocessorOverloadTriggerValues
-	Valid                                   bool // Valid is true if PjsipTaskprocessorOverloadTriggerValues is not NULL
+	PjsipTaskprocessorOverloadTriggerValues PjsipTaskprocessorOverloadTriggerValues `json:"pjsip_taskprocessor_overload_trigger_values"`
+	Valid                                   bool                                    `json:"valid"` // Valid is true if PjsipTaskprocessorOverloadTriggerValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -828,8 +828,8 @@ func (e *PjsipTimerValues) Scan(src interface{}) error {
 }
 
 type NullPjsipTimerValues struct {
-	PjsipTimerValues PjsipTimerValues
-	Valid            bool // Valid is true if PjsipTimerValues is not NULL
+	PjsipTimerValues PjsipTimerValues `json:"pjsip_timer_values"`
+	Valid            bool             `json:"valid"` // Valid is true if PjsipTimerValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -877,8 +877,8 @@ func (e *PjsipTransportMethodValuesV2) Scan(src interface{}) error {
 }
 
 type NullPjsipTransportMethodValuesV2 struct {
-	PjsipTransportMethodValuesV2 PjsipTransportMethodValuesV2
-	Valid                        bool // Valid is true if PjsipTransportMethodValuesV2 is not NULL
+	PjsipTransportMethodValuesV2 PjsipTransportMethodValuesV2 `json:"pjsip_transport_method_values_v2"`
+	Valid                        bool                         `json:"valid"` // Valid is true if PjsipTransportMethodValuesV2 is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -923,8 +923,8 @@ func (e *PjsipTransportProtocolValuesV2) Scan(src interface{}) error {
 }
 
 type NullPjsipTransportProtocolValuesV2 struct {
-	PjsipTransportProtocolValuesV2 PjsipTransportProtocolValuesV2
-	Valid                          bool // Valid is true if PjsipTransportProtocolValuesV2 is not NULL
+	PjsipTransportProtocolValuesV2 PjsipTransportProtocolValuesV2 `json:"pjsip_transport_protocol_values_v2"`
+	Valid                          bool                           `json:"valid"` // Valid is true if PjsipTransportProtocolValuesV2 is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -966,8 +966,8 @@ func (e *QueueAutopauseValues) Scan(src interface{}) error {
 }
 
 type NullQueueAutopauseValues struct {
-	QueueAutopauseValues QueueAutopauseValues
-	Valid                bool // Valid is true if QueueAutopauseValues is not NULL
+	QueueAutopauseValues QueueAutopauseValues `json:"queue_autopause_values"`
+	Valid                bool                 `json:"valid"` // Valid is true if QueueAutopauseValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1014,8 +1014,8 @@ func (e *QueueStrategyValues) Scan(src interface{}) error {
 }
 
 type NullQueueStrategyValues struct {
-	QueueStrategyValues QueueStrategyValues
-	Valid               bool // Valid is true if QueueStrategyValues is not NULL
+	QueueStrategyValues QueueStrategyValues `json:"queue_strategy_values"`
+	Valid               bool                `json:"valid"` // Valid is true if QueueStrategyValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1056,8 +1056,8 @@ func (e *SecurityNegotiationValues) Scan(src interface{}) error {
 }
 
 type NullSecurityNegotiationValues struct {
-	SecurityNegotiationValues SecurityNegotiationValues
-	Valid                     bool // Valid is true if SecurityNegotiationValues is not NULL
+	SecurityNegotiationValues SecurityNegotiationValues `json:"security_negotiation_values"`
+	Valid                     bool                      `json:"valid"` // Valid is true if SecurityNegotiationValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1098,8 +1098,8 @@ func (e *ShaHashValues) Scan(src interface{}) error {
 }
 
 type NullShaHashValues struct {
-	ShaHashValues ShaHashValues
-	Valid         bool // Valid is true if ShaHashValues is not NULL
+	ShaHashValues ShaHashValues `json:"sha_hash_values"`
+	Valid         bool          `json:"valid"` // Valid is true if ShaHashValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1146,8 +1146,8 @@ func (e *SipCallingpresValues) Scan(src interface{}) error {
 }
 
 type NullSipCallingpresValues struct {
-	SipCallingpresValues SipCallingpresValues
-	Valid                bool // Valid is true if SipCallingpresValues is not NULL
+	SipCallingpresValues SipCallingpresValues `json:"sip_callingpres_values"`
+	Valid                bool                 `json:"valid"` // Valid is true if SipCallingpresValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1191,8 +1191,8 @@ func (e *SipDirectmediaValuesV2) Scan(src interface{}) error {
 }
 
 type NullSipDirectmediaValuesV2 struct {
-	SipDirectmediaValuesV2 SipDirectmediaValuesV2
-	Valid                  bool // Valid is true if SipDirectmediaValuesV2 is not NULL
+	SipDirectmediaValuesV2 SipDirectmediaValuesV2 `json:"sip_directmedia_values_v2"`
+	Valid                  bool                   `json:"valid"` // Valid is true if SipDirectmediaValuesV2 is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1236,8 +1236,8 @@ func (e *SipDtmfmodeValues) Scan(src interface{}) error {
 }
 
 type NullSipDtmfmodeValues struct {
-	SipDtmfmodeValues SipDtmfmodeValues
-	Valid             bool // Valid is true if SipDtmfmodeValues is not NULL
+	SipDtmfmodeValues SipDtmfmodeValues `json:"sip_dtmfmode_values"`
+	Valid             bool              `json:"valid"` // Valid is true if SipDtmfmodeValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1279,8 +1279,8 @@ func (e *SipProgressinbandValues) Scan(src interface{}) error {
 }
 
 type NullSipProgressinbandValues struct {
-	SipProgressinbandValues SipProgressinbandValues
-	Valid                   bool // Valid is true if SipProgressinbandValues is not NULL
+	SipProgressinbandValues SipProgressinbandValues `json:"sip_progressinband_values"`
+	Valid                   bool                    `json:"valid"` // Valid is true if SipProgressinbandValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1321,8 +1321,8 @@ func (e *SipSessionRefresherValues) Scan(src interface{}) error {
 }
 
 type NullSipSessionRefresherValues struct {
-	SipSessionRefresherValues SipSessionRefresherValues
-	Valid                     bool // Valid is true if SipSessionRefresherValues is not NULL
+	SipSessionRefresherValues SipSessionRefresherValues `json:"sip_session_refresher_values"`
+	Valid                     bool                      `json:"valid"` // Valid is true if SipSessionRefresherValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1364,8 +1364,8 @@ func (e *SipSessionTimersValues) Scan(src interface{}) error {
 }
 
 type NullSipSessionTimersValues struct {
-	SipSessionTimersValues SipSessionTimersValues
-	Valid                  bool // Valid is true if SipSessionTimersValues is not NULL
+	SipSessionTimersValues SipSessionTimersValues `json:"sip_session_timers_values"`
+	Valid                  bool                   `json:"valid"` // Valid is true if SipSessionTimersValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1411,8 +1411,8 @@ func (e *SipTransportValues) Scan(src interface{}) error {
 }
 
 type NullSipTransportValues struct {
-	SipTransportValues SipTransportValues
-	Valid              bool // Valid is true if SipTransportValues is not NULL
+	SipTransportValues SipTransportValues `json:"sip_transport_values"`
+	Valid              bool               `json:"valid"` // Valid is true if SipTransportValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1454,8 +1454,8 @@ func (e *TypeValues) Scan(src interface{}) error {
 }
 
 type NullTypeValues struct {
-	TypeValues TypeValues
-	Valid      bool // Valid is true if TypeValues is not NULL
+	TypeValues TypeValues `json:"type_values"`
+	Valid      bool       `json:"valid"` // Valid is true if TypeValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1496,8 +1496,8 @@ func (e *YesNoValues) Scan(src interface{}) error {
 }
 
 type NullYesNoValues struct {
-	YesNoValues YesNoValues
-	Valid       bool // Valid is true if YesNoValues is not NULL
+	YesNoValues YesNoValues `json:"yes_no_values"`
+	Valid       bool        `json:"valid"` // Valid is true if YesNoValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1538,8 +1538,8 @@ func (e *YesnoValues) Scan(src interface{}) error {
 }
 
 type NullYesnoValues struct {
-	YesnoValues YesnoValues
-	Valid       bool // Valid is true if YesnoValues is not NULL
+	YesnoValues YesnoValues `json:"yesno_values"`
+	Valid       bool        `json:"valid"` // Valid is true if YesnoValues is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -1561,703 +1561,703 @@ func (ns NullYesnoValues) Value() (driver.Value, error) {
 }
 
 type AlembicVersion struct {
-	VersionNum string
+	VersionNum string `json:"version_num"`
 }
 
 type Cdr struct {
-	ID          int64
-	Accountcode pgtype.Text
-	Src         pgtype.Text
-	Dst         pgtype.Text
-	Dcontext    pgtype.Text
-	Clid        pgtype.Text
-	Channel     pgtype.Text
-	Dstchannel  pgtype.Text
-	Lastapp     pgtype.Text
-	Lastdata    pgtype.Text
-	Cstart      pgtype.Timestamp
-	Answer      pgtype.Timestamp
-	Cend        pgtype.Timestamp
-	Duration    pgtype.Int4
-	Billsec     pgtype.Int4
-	Disposition pgtype.Text
-	Amaflags    pgtype.Text
-	Userfield   pgtype.Text
-	Uniqueid    pgtype.Text
-	Linkedid    pgtype.Text
-	Peeraccount pgtype.Text
-	Sequence    pgtype.Int4
+	ID          int64            `json:"id"`
+	Accountcode pgtype.Text      `json:"accountcode"`
+	Src         pgtype.Text      `json:"src"`
+	Dst         pgtype.Text      `json:"dst"`
+	Dcontext    pgtype.Text      `json:"dcontext"`
+	Clid        pgtype.Text      `json:"clid"`
+	Channel     pgtype.Text      `json:"channel"`
+	Dstchannel  pgtype.Text      `json:"dstchannel"`
+	Lastapp     pgtype.Text      `json:"lastapp"`
+	Lastdata    pgtype.Text      `json:"lastdata"`
+	Cstart      pgtype.Timestamp `json:"cstart"`
+	Answer      pgtype.Timestamp `json:"answer"`
+	Cend        pgtype.Timestamp `json:"cend"`
+	Duration    pgtype.Int4      `json:"duration"`
+	Billsec     pgtype.Int4      `json:"billsec"`
+	Disposition pgtype.Text      `json:"disposition"`
+	Amaflags    pgtype.Text      `json:"amaflags"`
+	Userfield   pgtype.Text      `json:"userfield"`
+	Uniqueid    pgtype.Text      `json:"uniqueid"`
+	Linkedid    pgtype.Text      `json:"linkedid"`
+	Peeraccount pgtype.Text      `json:"peeraccount"`
+	Sequence    pgtype.Int4      `json:"sequence"`
 }
 
 type Extension struct {
-	ID       int64
-	Context  string
-	Exten    string
-	Priority int32
-	App      string
-	Appdata  string
+	ID       int64  `json:"id"`
+	Context  string `json:"context"`
+	Exten    string `json:"exten"`
+	Priority int32  `json:"priority"`
+	App      string `json:"app"`
+	Appdata  string `json:"appdata"`
 }
 
 type Iaxfriend struct {
-	ID                int32
-	Name              string
-	Type              NullTypeValues
-	Username          pgtype.Text
-	Mailbox           pgtype.Text
-	Secret            pgtype.Text
-	Dbsecret          pgtype.Text
-	Context           pgtype.Text
-	Regcontext        pgtype.Text
-	Host              pgtype.Text
-	Ipaddr            pgtype.Text
-	Port              pgtype.Int4
-	Defaultip         pgtype.Text
-	Sourceaddress     pgtype.Text
-	Mask              pgtype.Text
-	Regexten          pgtype.Text
-	Regseconds        pgtype.Int4
-	Accountcode       pgtype.Text
-	Mohinterpret      pgtype.Text
-	Mohsuggest        pgtype.Text
-	Inkeys            pgtype.Text
-	Outkeys           pgtype.Text
-	Language          pgtype.Text
-	Callerid          pgtype.Text
-	CidNumber         pgtype.Text
-	Sendani           NullYesNoValues
-	Fullname          pgtype.Text
-	Trunk             NullYesNoValues
-	Auth              pgtype.Text
-	Maxauthreq        pgtype.Int4
-	Requirecalltoken  NullIaxRequirecalltokenValues
-	Encryption        NullIaxEncryptionValues
-	Transfer          NullIaxTransferValues
-	Jitterbuffer      NullYesNoValues
-	Forcejitterbuffer NullYesNoValues
-	Disallow          pgtype.Text
-	Allow             pgtype.Text
-	Codecpriority     pgtype.Text
-	Qualify           pgtype.Text
-	Qualifysmoothing  NullYesNoValues
-	Qualifyfreqok     pgtype.Text
-	Qualifyfreqnotok  pgtype.Text
-	Timezone          pgtype.Text
-	Adsi              NullYesNoValues
-	Amaflags          pgtype.Text
-	Setvar            pgtype.Text
+	ID                int32                         `json:"id"`
+	Name              string                        `json:"name"`
+	Type              NullTypeValues                `json:"type"`
+	Username          pgtype.Text                   `json:"username"`
+	Mailbox           pgtype.Text                   `json:"mailbox"`
+	Secret            pgtype.Text                   `json:"secret"`
+	Dbsecret          pgtype.Text                   `json:"dbsecret"`
+	Context           pgtype.Text                   `json:"context"`
+	Regcontext        pgtype.Text                   `json:"regcontext"`
+	Host              pgtype.Text                   `json:"host"`
+	Ipaddr            pgtype.Text                   `json:"ipaddr"`
+	Port              pgtype.Int4                   `json:"port"`
+	Defaultip         pgtype.Text                   `json:"defaultip"`
+	Sourceaddress     pgtype.Text                   `json:"sourceaddress"`
+	Mask              pgtype.Text                   `json:"mask"`
+	Regexten          pgtype.Text                   `json:"regexten"`
+	Regseconds        pgtype.Int4                   `json:"regseconds"`
+	Accountcode       pgtype.Text                   `json:"accountcode"`
+	Mohinterpret      pgtype.Text                   `json:"mohinterpret"`
+	Mohsuggest        pgtype.Text                   `json:"mohsuggest"`
+	Inkeys            pgtype.Text                   `json:"inkeys"`
+	Outkeys           pgtype.Text                   `json:"outkeys"`
+	Language          pgtype.Text                   `json:"language"`
+	Callerid          pgtype.Text                   `json:"callerid"`
+	CidNumber         pgtype.Text                   `json:"cid_number"`
+	Sendani           NullYesNoValues               `json:"sendani"`
+	Fullname          pgtype.Text                   `json:"fullname"`
+	Trunk             NullYesNoValues               `json:"trunk"`
+	Auth              pgtype.Text                   `json:"auth"`
+	Maxauthreq        pgtype.Int4                   `json:"maxauthreq"`
+	Requirecalltoken  NullIaxRequirecalltokenValues `json:"requirecalltoken"`
+	Encryption        NullIaxEncryptionValues       `json:"encryption"`
+	Transfer          NullIaxTransferValues         `json:"transfer"`
+	Jitterbuffer      NullYesNoValues               `json:"jitterbuffer"`
+	Forcejitterbuffer NullYesNoValues               `json:"forcejitterbuffer"`
+	Disallow          pgtype.Text                   `json:"disallow"`
+	Allow             pgtype.Text                   `json:"allow"`
+	Codecpriority     pgtype.Text                   `json:"codecpriority"`
+	Qualify           pgtype.Text                   `json:"qualify"`
+	Qualifysmoothing  NullYesNoValues               `json:"qualifysmoothing"`
+	Qualifyfreqok     pgtype.Text                   `json:"qualifyfreqok"`
+	Qualifyfreqnotok  pgtype.Text                   `json:"qualifyfreqnotok"`
+	Timezone          pgtype.Text                   `json:"timezone"`
+	Adsi              NullYesNoValues               `json:"adsi"`
+	Amaflags          pgtype.Text                   `json:"amaflags"`
+	Setvar            pgtype.Text                   `json:"setvar"`
 }
 
 type Meetme struct {
-	Bookid            int32
-	Confno            string
-	Starttime         pgtype.Timestamp
-	Endtime           pgtype.Timestamp
-	Pin               pgtype.Text
-	Adminpin          pgtype.Text
-	Opts              pgtype.Text
-	Adminopts         pgtype.Text
-	Recordingfilename pgtype.Text
-	Recordingformat   pgtype.Text
-	Maxusers          pgtype.Int4
-	Members           int32
+	Bookid            int32            `json:"bookid"`
+	Confno            string           `json:"confno"`
+	Starttime         pgtype.Timestamp `json:"starttime"`
+	Endtime           pgtype.Timestamp `json:"endtime"`
+	Pin               pgtype.Text      `json:"pin"`
+	Adminpin          pgtype.Text      `json:"adminpin"`
+	Opts              pgtype.Text      `json:"opts"`
+	Adminopts         pgtype.Text      `json:"adminopts"`
+	Recordingfilename pgtype.Text      `json:"recordingfilename"`
+	Recordingformat   pgtype.Text      `json:"recordingformat"`
+	Maxusers          pgtype.Int4      `json:"maxusers"`
+	Members           int32            `json:"members"`
 }
 
 type Musiconhold struct {
-	Name        string
-	Mode        NullMohModeValues
-	Directory   pgtype.Text
-	Application pgtype.Text
-	Digit       pgtype.Text
-	Sort        pgtype.Text
-	Format      pgtype.Text
-	Stamp       pgtype.Timestamp
-	LoopLast    NullYesnoValues
+	Name        string            `json:"name"`
+	Mode        NullMohModeValues `json:"mode"`
+	Directory   pgtype.Text       `json:"directory"`
+	Application pgtype.Text       `json:"application"`
+	Digit       pgtype.Text       `json:"digit"`
+	Sort        pgtype.Text       `json:"sort"`
+	Format      pgtype.Text       `json:"format"`
+	Stamp       pgtype.Timestamp  `json:"stamp"`
+	LoopLast    NullYesnoValues   `json:"loop_last"`
 }
 
 type MusiconholdEntry struct {
-	Name     string
-	Position int32
-	Entry    string
+	Name     string `json:"name"`
+	Position int32  `json:"position"`
+	Entry    string `json:"entry"`
 }
 
 type PsAor struct {
-	ID                  string
-	Contact             pgtype.Text
-	DefaultExpiration   pgtype.Int4
-	Mailboxes           pgtype.Text
-	MaxContacts         pgtype.Int4
-	MinimumExpiration   pgtype.Int4
-	RemoveExisting      NullAstBoolValues
-	QualifyFrequency    pgtype.Int4
-	AuthenticateQualify NullAstBoolValues
-	MaximumExpiration   pgtype.Int4
-	OutboundProxy       pgtype.Text
-	SupportPath         NullAstBoolValues
-	QualifyTimeout      pgtype.Float8
-	VoicemailExtension  pgtype.Text
-	RemoveUnavailable   NullAstBoolValues
+	ID                  string            `json:"id"`
+	Contact             pgtype.Text       `json:"contact"`
+	DefaultExpiration   pgtype.Int4       `json:"default_expiration"`
+	Mailboxes           pgtype.Text       `json:"mailboxes"`
+	MaxContacts         pgtype.Int4       `json:"max_contacts"`
+	MinimumExpiration   pgtype.Int4       `json:"minimum_expiration"`
+	RemoveExisting      NullAstBoolValues `json:"remove_existing"`
+	QualifyFrequency    pgtype.Int4       `json:"qualify_frequency"`
+	AuthenticateQualify NullAstBoolValues `json:"authenticate_qualify"`
+	MaximumExpiration   pgtype.Int4       `json:"maximum_expiration"`
+	OutboundProxy       pgtype.Text       `json:"outbound_proxy"`
+	SupportPath         NullAstBoolValues `json:"support_path"`
+	QualifyTimeout      pgtype.Float8     `json:"qualify_timeout"`
+	VoicemailExtension  pgtype.Text       `json:"voicemail_extension"`
+	RemoveUnavailable   NullAstBoolValues `json:"remove_unavailable"`
 }
 
 type PsAsteriskPublication struct {
-	ID                  string
-	DevicestatePublish  pgtype.Text
-	MailboxstatePublish pgtype.Text
-	DeviceState         NullAstBoolValues
-	DeviceStateFilter   pgtype.Text
-	MailboxState        NullAstBoolValues
-	MailboxStateFilter  pgtype.Text
+	ID                  string            `json:"id"`
+	DevicestatePublish  pgtype.Text       `json:"devicestate_publish"`
+	MailboxstatePublish pgtype.Text       `json:"mailboxstate_publish"`
+	DeviceState         NullAstBoolValues `json:"device_state"`
+	DeviceStateFilter   pgtype.Text       `json:"device_state_filter"`
+	MailboxState        NullAstBoolValues `json:"mailbox_state"`
+	MailboxStateFilter  pgtype.Text       `json:"mailbox_state_filter"`
 }
 
 type PsAuth struct {
-	ID            string
-	AuthType      NullPjsipAuthTypeValuesV2
-	NonceLifetime pgtype.Int4
-	Md5Cred       pgtype.Text
-	Password      pgtype.Text
-	Realm         pgtype.Text
-	Username      pgtype.Text
-	RefreshToken  pgtype.Text
-	OauthClientid pgtype.Text
-	OauthSecret   pgtype.Text
+	ID            string                    `json:"id"`
+	AuthType      NullPjsipAuthTypeValuesV2 `json:"auth_type"`
+	NonceLifetime pgtype.Int4               `json:"nonce_lifetime"`
+	Md5Cred       pgtype.Text               `json:"md5_cred"`
+	Password      pgtype.Text               `json:"password"`
+	Realm         pgtype.Text               `json:"realm"`
+	Username      pgtype.Text               `json:"username"`
+	RefreshToken  pgtype.Text               `json:"refresh_token"`
+	OauthClientid pgtype.Text               `json:"oauth_clientid"`
+	OauthSecret   pgtype.Text               `json:"oauth_secret"`
 }
 
 type PsContact struct {
-	ID                  string
-	Uri                 pgtype.Text
-	ExpirationTime      pgtype.Int8
-	QualifyFrequency    pgtype.Int4
-	OutboundProxy       pgtype.Text
-	Path                pgtype.Text
-	UserAgent           pgtype.Text
-	QualifyTimeout      pgtype.Float8
-	RegServer           pgtype.Text
-	AuthenticateQualify NullAstBoolValues
-	ViaAddr             pgtype.Text
-	ViaPort             pgtype.Int4
-	CallID              pgtype.Text
-	Endpoint            pgtype.Text
-	PruneOnBoot         NullAstBoolValues
+	ID                  string            `json:"id"`
+	Uri                 pgtype.Text       `json:"uri"`
+	ExpirationTime      pgtype.Int8       `json:"expiration_time"`
+	QualifyFrequency    pgtype.Int4       `json:"qualify_frequency"`
+	OutboundProxy       pgtype.Text       `json:"outbound_proxy"`
+	Path                pgtype.Text       `json:"path"`
+	UserAgent           pgtype.Text       `json:"user_agent"`
+	QualifyTimeout      pgtype.Float8     `json:"qualify_timeout"`
+	RegServer           pgtype.Text       `json:"reg_server"`
+	AuthenticateQualify NullAstBoolValues `json:"authenticate_qualify"`
+	ViaAddr             pgtype.Text       `json:"via_addr"`
+	ViaPort             pgtype.Int4       `json:"via_port"`
+	CallID              pgtype.Text       `json:"call_id"`
+	Endpoint            pgtype.Text       `json:"endpoint"`
+	PruneOnBoot         NullAstBoolValues `json:"prune_on_boot"`
 }
 
 type PsDomainAlias struct {
-	ID     string
-	Domain pgtype.Text
+	ID     string      `json:"id"`
+	Domain pgtype.Text `json:"domain"`
 }
 
 type PsEndpoint struct {
-	ID                              string
-	Transport                       pgtype.Text
-	Aors                            pgtype.Text
-	Auth                            pgtype.Text
-	Context                         pgtype.Text
-	Disallow                        pgtype.Text
-	Allow                           pgtype.Text
-	DirectMedia                     NullAstBoolValues
-	ConnectedLineMethod             NullPjsipConnectedLineMethodValues
-	DirectMediaMethod               NullPjsipConnectedLineMethodValues
-	DirectMediaGlareMitigation      NullPjsipDirectMediaGlareMitigationValues
-	DisableDirectMediaOnNat         NullAstBoolValues
-	DtmfMode                        NullPjsipDtmfModeValuesV3
-	ExternalMediaAddress            pgtype.Text
-	ForceRport                      NullAstBoolValues
-	IceSupport                      NullAstBoolValues
-	IdentifyBy                      pgtype.Text
-	Mailboxes                       pgtype.Text
-	MohSuggest                      pgtype.Text
-	OutboundAuth                    pgtype.Text
-	OutboundProxy                   pgtype.Text
-	RewriteContact                  NullAstBoolValues
-	RtpIpv6                         NullAstBoolValues
-	RtpSymmetric                    NullAstBoolValues
-	SendDiversion                   NullAstBoolValues
-	SendPai                         NullAstBoolValues
-	SendRpid                        NullAstBoolValues
-	TimersMinSe                     pgtype.Int4
-	Timers                          NullPjsipTimerValues
-	TimersSessExpires               pgtype.Int4
-	Callerid                        pgtype.Text
-	CalleridPrivacy                 NullPjsipCidPrivacyValues
-	CalleridTag                     pgtype.Text
-	_100rel                         NullPjsip100relValuesV2
-	AggregateMwi                    NullAstBoolValues
-	TrustIDInbound                  NullAstBoolValues
-	TrustIDOutbound                 NullAstBoolValues
-	UsePtime                        NullAstBoolValues
-	UseAvpf                         NullAstBoolValues
-	MediaEncryption                 NullPjsipMediaEncryptionValues
-	InbandProgress                  NullAstBoolValues
-	CallGroup                       pgtype.Text
-	PickupGroup                     pgtype.Text
-	NamedCallGroup                  pgtype.Text
-	NamedPickupGroup                pgtype.Text
-	DeviceStateBusyAt               pgtype.Int4
-	FaxDetect                       NullAstBoolValues
-	T38Udptl                        NullAstBoolValues
-	T38UdptlEc                      NullPjsipT38udptlEcValues
-	T38UdptlMaxdatagram             pgtype.Int4
-	T38UdptlNat                     NullAstBoolValues
-	T38UdptlIpv6                    NullAstBoolValues
-	ToneZone                        pgtype.Text
-	Language                        pgtype.Text
-	OneTouchRecording               NullAstBoolValues
-	RecordOnFeature                 pgtype.Text
-	RecordOffFeature                pgtype.Text
-	RtpEngine                       pgtype.Text
-	AllowTransfer                   NullAstBoolValues
-	AllowSubscribe                  NullAstBoolValues
-	SdpOwner                        pgtype.Text
-	SdpSession                      pgtype.Text
-	TosAudio                        pgtype.Text
-	TosVideo                        pgtype.Text
-	SubMinExpiry                    pgtype.Int4
-	FromDomain                      pgtype.Text
-	FromUser                        pgtype.Text
-	MwiFromUser                     pgtype.Text
-	DtlsVerify                      pgtype.Text
-	DtlsRekey                       pgtype.Text
-	DtlsCertFile                    pgtype.Text
-	DtlsPrivateKey                  pgtype.Text
-	DtlsCipher                      pgtype.Text
-	DtlsCaFile                      pgtype.Text
-	DtlsCaPath                      pgtype.Text
-	DtlsSetup                       NullPjsipDtlsSetupValues
-	SrtpTag32                       NullAstBoolValues
-	MediaAddress                    pgtype.Text
-	RedirectMethod                  NullPjsipRedirectMethodValues
-	SetVar                          pgtype.Text
-	CosAudio                        pgtype.Int4
-	CosVideo                        pgtype.Int4
-	MessageContext                  pgtype.Text
-	ForceAvp                        NullAstBoolValues
-	MediaUseReceivedTransport       NullAstBoolValues
-	Accountcode                     pgtype.Text
-	UserEqPhone                     NullAstBoolValues
-	MohPassthrough                  NullAstBoolValues
-	MediaEncryptionOptimistic       NullAstBoolValues
-	RpidImmediate                   NullAstBoolValues
-	G726NonStandard                 NullAstBoolValues
-	RtpKeepalive                    pgtype.Int4
-	RtpTimeout                      pgtype.Int4
-	RtpTimeoutHold                  pgtype.Int4
-	BindRtpToMediaAddress           NullAstBoolValues
-	VoicemailExtension              pgtype.Text
-	MwiSubscribeReplacesUnsolicited NullAstBoolValues
-	Deny                            pgtype.Text
-	Permit                          pgtype.Text
-	Acl                             pgtype.Text
-	ContactDeny                     pgtype.Text
-	ContactPermit                   pgtype.Text
-	ContactAcl                      pgtype.Text
-	SubscribeContext                pgtype.Text
-	FaxDetectTimeout                pgtype.Int4
-	ContactUser                     pgtype.Text
-	PreferredCodecOnly              NullAstBoolValues
-	AsymmetricRtpCodec              NullAstBoolValues
-	RtcpMux                         NullAstBoolValues
-	AllowOverlap                    NullAstBoolValues
-	ReferBlindProgress              NullAstBoolValues
-	NotifyEarlyInuseRinging         NullAstBoolValues
-	MaxAudioStreams                 pgtype.Int4
-	MaxVideoStreams                 pgtype.Int4
-	Webrtc                          NullAstBoolValues
-	DtlsFingerprint                 NullShaHashValues
-	IncomingMwiMailbox              pgtype.Text
-	Bundle                          NullAstBoolValues
-	DtlsAutoGenerateCert            NullAstBoolValues
-	FollowEarlyMediaFork            NullAstBoolValues
-	AcceptMultipleSdpAnswers        NullAstBoolValues
-	SuppressQ850ReasonHeaders       NullAstBoolValues
-	TrustConnectedLine              NullAstBoolValues
-	SendConnectedLine               NullAstBoolValues
-	Ignore183WithoutSdp             NullAstBoolValues
-	CodecPrefsIncomingOffer         pgtype.Text
-	CodecPrefsOutgoingOffer         pgtype.Text
-	CodecPrefsIncomingAnswer        pgtype.Text
-	CodecPrefsOutgoingAnswer        pgtype.Text
-	StirShaken                      NullAstBoolValues
-	SendHistoryInfo                 NullAstBoolValues
-	AllowUnauthenticatedOptions     NullAstBoolValues
-	T38BindUdptlToMediaAddress      NullAstBoolValues
-	GeolocIncomingCallProfile       pgtype.Text
-	GeolocOutgoingCallProfile       pgtype.Text
-	IncomingCallOfferPref           NullPjsipIncomingCallOfferPrefValues
-	OutgoingCallOfferPref           NullPjsipOutgoingCallOfferPrefValues
-	StirShakenProfile               pgtype.Text
-	SecurityNegotiation             NullSecurityNegotiationValues
-	SecurityMechanisms              pgtype.Text
-	SendAoc                         NullAstBoolValues
-	OverlapContext                  pgtype.Text
+	ID                              string                                    `json:"id"`
+	Transport                       pgtype.Text                               `json:"transport"`
+	Aors                            pgtype.Text                               `json:"aors"`
+	Auth                            pgtype.Text                               `json:"auth"`
+	Context                         pgtype.Text                               `json:"context"`
+	Disallow                        pgtype.Text                               `json:"disallow"`
+	Allow                           pgtype.Text                               `json:"allow"`
+	DirectMedia                     NullAstBoolValues                         `json:"direct_media"`
+	ConnectedLineMethod             NullPjsipConnectedLineMethodValues        `json:"connected_line_method"`
+	DirectMediaMethod               NullPjsipConnectedLineMethodValues        `json:"direct_media_method"`
+	DirectMediaGlareMitigation      NullPjsipDirectMediaGlareMitigationValues `json:"direct_media_glare_mitigation"`
+	DisableDirectMediaOnNat         NullAstBoolValues                         `json:"disable_direct_media_on_nat"`
+	DtmfMode                        NullPjsipDtmfModeValuesV3                 `json:"dtmf_mode"`
+	ExternalMediaAddress            pgtype.Text                               `json:"external_media_address"`
+	ForceRport                      NullAstBoolValues                         `json:"force_rport"`
+	IceSupport                      NullAstBoolValues                         `json:"ice_support"`
+	IdentifyBy                      pgtype.Text                               `json:"identify_by"`
+	Mailboxes                       pgtype.Text                               `json:"mailboxes"`
+	MohSuggest                      pgtype.Text                               `json:"moh_suggest"`
+	OutboundAuth                    pgtype.Text                               `json:"outbound_auth"`
+	OutboundProxy                   pgtype.Text                               `json:"outbound_proxy"`
+	RewriteContact                  NullAstBoolValues                         `json:"rewrite_contact"`
+	RtpIpv6                         NullAstBoolValues                         `json:"rtp_ipv6"`
+	RtpSymmetric                    NullAstBoolValues                         `json:"rtp_symmetric"`
+	SendDiversion                   NullAstBoolValues                         `json:"send_diversion"`
+	SendPai                         NullAstBoolValues                         `json:"send_pai"`
+	SendRpid                        NullAstBoolValues                         `json:"send_rpid"`
+	TimersMinSe                     pgtype.Int4                               `json:"timers_min_se"`
+	Timers                          NullPjsipTimerValues                      `json:"timers"`
+	TimersSessExpires               pgtype.Int4                               `json:"timers_sess_expires"`
+	Callerid                        pgtype.Text                               `json:"callerid"`
+	CalleridPrivacy                 NullPjsipCidPrivacyValues                 `json:"callerid_privacy"`
+	CalleridTag                     pgtype.Text                               `json:"callerid_tag"`
+	_100rel                         NullPjsip100relValuesV2                   `json:"100rel"`
+	AggregateMwi                    NullAstBoolValues                         `json:"aggregate_mwi"`
+	TrustIDInbound                  NullAstBoolValues                         `json:"trust_id_inbound"`
+	TrustIDOutbound                 NullAstBoolValues                         `json:"trust_id_outbound"`
+	UsePtime                        NullAstBoolValues                         `json:"use_ptime"`
+	UseAvpf                         NullAstBoolValues                         `json:"use_avpf"`
+	MediaEncryption                 NullPjsipMediaEncryptionValues            `json:"media_encryption"`
+	InbandProgress                  NullAstBoolValues                         `json:"inband_progress"`
+	CallGroup                       pgtype.Text                               `json:"call_group"`
+	PickupGroup                     pgtype.Text                               `json:"pickup_group"`
+	NamedCallGroup                  pgtype.Text                               `json:"named_call_group"`
+	NamedPickupGroup                pgtype.Text                               `json:"named_pickup_group"`
+	DeviceStateBusyAt               pgtype.Int4                               `json:"device_state_busy_at"`
+	FaxDetect                       NullAstBoolValues                         `json:"fax_detect"`
+	T38Udptl                        NullAstBoolValues                         `json:"t38_udptl"`
+	T38UdptlEc                      NullPjsipT38udptlEcValues                 `json:"t38_udptl_ec"`
+	T38UdptlMaxdatagram             pgtype.Int4                               `json:"t38_udptl_maxdatagram"`
+	T38UdptlNat                     NullAstBoolValues                         `json:"t38_udptl_nat"`
+	T38UdptlIpv6                    NullAstBoolValues                         `json:"t38_udptl_ipv6"`
+	ToneZone                        pgtype.Text                               `json:"tone_zone"`
+	Language                        pgtype.Text                               `json:"language"`
+	OneTouchRecording               NullAstBoolValues                         `json:"one_touch_recording"`
+	RecordOnFeature                 pgtype.Text                               `json:"record_on_feature"`
+	RecordOffFeature                pgtype.Text                               `json:"record_off_feature"`
+	RtpEngine                       pgtype.Text                               `json:"rtp_engine"`
+	AllowTransfer                   NullAstBoolValues                         `json:"allow_transfer"`
+	AllowSubscribe                  NullAstBoolValues                         `json:"allow_subscribe"`
+	SdpOwner                        pgtype.Text                               `json:"sdp_owner"`
+	SdpSession                      pgtype.Text                               `json:"sdp_session"`
+	TosAudio                        pgtype.Text                               `json:"tos_audio"`
+	TosVideo                        pgtype.Text                               `json:"tos_video"`
+	SubMinExpiry                    pgtype.Int4                               `json:"sub_min_expiry"`
+	FromDomain                      pgtype.Text                               `json:"from_domain"`
+	FromUser                        pgtype.Text                               `json:"from_user"`
+	MwiFromUser                     pgtype.Text                               `json:"mwi_from_user"`
+	DtlsVerify                      pgtype.Text                               `json:"dtls_verify"`
+	DtlsRekey                       pgtype.Text                               `json:"dtls_rekey"`
+	DtlsCertFile                    pgtype.Text                               `json:"dtls_cert_file"`
+	DtlsPrivateKey                  pgtype.Text                               `json:"dtls_private_key"`
+	DtlsCipher                      pgtype.Text                               `json:"dtls_cipher"`
+	DtlsCaFile                      pgtype.Text                               `json:"dtls_ca_file"`
+	DtlsCaPath                      pgtype.Text                               `json:"dtls_ca_path"`
+	DtlsSetup                       NullPjsipDtlsSetupValues                  `json:"dtls_setup"`
+	SrtpTag32                       NullAstBoolValues                         `json:"srtp_tag_32"`
+	MediaAddress                    pgtype.Text                               `json:"media_address"`
+	RedirectMethod                  NullPjsipRedirectMethodValues             `json:"redirect_method"`
+	SetVar                          pgtype.Text                               `json:"set_var"`
+	CosAudio                        pgtype.Int4                               `json:"cos_audio"`
+	CosVideo                        pgtype.Int4                               `json:"cos_video"`
+	MessageContext                  pgtype.Text                               `json:"message_context"`
+	ForceAvp                        NullAstBoolValues                         `json:"force_avp"`
+	MediaUseReceivedTransport       NullAstBoolValues                         `json:"media_use_received_transport"`
+	Accountcode                     pgtype.Text                               `json:"accountcode"`
+	UserEqPhone                     NullAstBoolValues                         `json:"user_eq_phone"`
+	MohPassthrough                  NullAstBoolValues                         `json:"moh_passthrough"`
+	MediaEncryptionOptimistic       NullAstBoolValues                         `json:"media_encryption_optimistic"`
+	RpidImmediate                   NullAstBoolValues                         `json:"rpid_immediate"`
+	G726NonStandard                 NullAstBoolValues                         `json:"g726_non_standard"`
+	RtpKeepalive                    pgtype.Int4                               `json:"rtp_keepalive"`
+	RtpTimeout                      pgtype.Int4                               `json:"rtp_timeout"`
+	RtpTimeoutHold                  pgtype.Int4                               `json:"rtp_timeout_hold"`
+	BindRtpToMediaAddress           NullAstBoolValues                         `json:"bind_rtp_to_media_address"`
+	VoicemailExtension              pgtype.Text                               `json:"voicemail_extension"`
+	MwiSubscribeReplacesUnsolicited NullAstBoolValues                         `json:"mwi_subscribe_replaces_unsolicited"`
+	Deny                            pgtype.Text                               `json:"deny"`
+	Permit                          pgtype.Text                               `json:"permit"`
+	Acl                             pgtype.Text                               `json:"acl"`
+	ContactDeny                     pgtype.Text                               `json:"contact_deny"`
+	ContactPermit                   pgtype.Text                               `json:"contact_permit"`
+	ContactAcl                      pgtype.Text                               `json:"contact_acl"`
+	SubscribeContext                pgtype.Text                               `json:"subscribe_context"`
+	FaxDetectTimeout                pgtype.Int4                               `json:"fax_detect_timeout"`
+	ContactUser                     pgtype.Text                               `json:"contact_user"`
+	PreferredCodecOnly              NullAstBoolValues                         `json:"preferred_codec_only"`
+	AsymmetricRtpCodec              NullAstBoolValues                         `json:"asymmetric_rtp_codec"`
+	RtcpMux                         NullAstBoolValues                         `json:"rtcp_mux"`
+	AllowOverlap                    NullAstBoolValues                         `json:"allow_overlap"`
+	ReferBlindProgress              NullAstBoolValues                         `json:"refer_blind_progress"`
+	NotifyEarlyInuseRinging         NullAstBoolValues                         `json:"notify_early_inuse_ringing"`
+	MaxAudioStreams                 pgtype.Int4                               `json:"max_audio_streams"`
+	MaxVideoStreams                 pgtype.Int4                               `json:"max_video_streams"`
+	Webrtc                          NullAstBoolValues                         `json:"webrtc"`
+	DtlsFingerprint                 NullShaHashValues                         `json:"dtls_fingerprint"`
+	IncomingMwiMailbox              pgtype.Text                               `json:"incoming_mwi_mailbox"`
+	Bundle                          NullAstBoolValues                         `json:"bundle"`
+	DtlsAutoGenerateCert            NullAstBoolValues                         `json:"dtls_auto_generate_cert"`
+	FollowEarlyMediaFork            NullAstBoolValues                         `json:"follow_early_media_fork"`
+	AcceptMultipleSdpAnswers        NullAstBoolValues                         `json:"accept_multiple_sdp_answers"`
+	SuppressQ850ReasonHeaders       NullAstBoolValues                         `json:"suppress_q850_reason_headers"`
+	TrustConnectedLine              NullAstBoolValues                         `json:"trust_connected_line"`
+	SendConnectedLine               NullAstBoolValues                         `json:"send_connected_line"`
+	Ignore183WithoutSdp             NullAstBoolValues                         `json:"ignore_183_without_sdp"`
+	CodecPrefsIncomingOffer         pgtype.Text                               `json:"codec_prefs_incoming_offer"`
+	CodecPrefsOutgoingOffer         pgtype.Text                               `json:"codec_prefs_outgoing_offer"`
+	CodecPrefsIncomingAnswer        pgtype.Text                               `json:"codec_prefs_incoming_answer"`
+	CodecPrefsOutgoingAnswer        pgtype.Text                               `json:"codec_prefs_outgoing_answer"`
+	StirShaken                      NullAstBoolValues                         `json:"stir_shaken"`
+	SendHistoryInfo                 NullAstBoolValues                         `json:"send_history_info"`
+	AllowUnauthenticatedOptions     NullAstBoolValues                         `json:"allow_unauthenticated_options"`
+	T38BindUdptlToMediaAddress      NullAstBoolValues                         `json:"t38_bind_udptl_to_media_address"`
+	GeolocIncomingCallProfile       pgtype.Text                               `json:"geoloc_incoming_call_profile"`
+	GeolocOutgoingCallProfile       pgtype.Text                               `json:"geoloc_outgoing_call_profile"`
+	IncomingCallOfferPref           NullPjsipIncomingCallOfferPrefValues      `json:"incoming_call_offer_pref"`
+	OutgoingCallOfferPref           NullPjsipOutgoingCallOfferPrefValues      `json:"outgoing_call_offer_pref"`
+	StirShakenProfile               pgtype.Text                               `json:"stir_shaken_profile"`
+	SecurityNegotiation             NullSecurityNegotiationValues             `json:"security_negotiation"`
+	SecurityMechanisms              pgtype.Text                               `json:"security_mechanisms"`
+	SendAoc                         NullAstBoolValues                         `json:"send_aoc"`
+	OverlapContext                  pgtype.Text                               `json:"overlap_context"`
 }
 
 type PsEndpointIDIp struct {
-	ID              string
-	Endpoint        pgtype.Text
-	Match           pgtype.Text
-	SrvLookups      NullAstBoolValues
-	MatchHeader     pgtype.Text
-	MatchRequestUri pgtype.Text
+	ID              string            `json:"id"`
+	Endpoint        pgtype.Text       `json:"endpoint"`
+	Match           pgtype.Text       `json:"match"`
+	SrvLookups      NullAstBoolValues `json:"srv_lookups"`
+	MatchHeader     pgtype.Text       `json:"match_header"`
+	MatchRequestUri pgtype.Text       `json:"match_request_uri"`
 }
 
 type PsGlobal struct {
-	ID                                    string
-	MaxForwards                           pgtype.Int4
-	UserAgent                             pgtype.Text
-	DefaultOutboundEndpoint               pgtype.Text
-	Debug                                 pgtype.Text
-	EndpointIdentifierOrder               pgtype.Text
-	MaxInitialQualifyTime                 pgtype.Int4
-	DefaultFromUser                       pgtype.Text
-	KeepAliveInterval                     pgtype.Int4
-	Regcontext                            pgtype.Text
-	ContactExpirationCheckInterval        pgtype.Int4
-	DefaultVoicemailExtension             pgtype.Text
-	DisableMultiDomain                    NullAstBoolValues
-	UnidentifiedRequestCount              pgtype.Int4
-	UnidentifiedRequestPeriod             pgtype.Int4
-	UnidentifiedRequestPruneInterval      pgtype.Int4
-	DefaultRealm                          pgtype.Text
-	MwiTpsQueueHigh                       pgtype.Int4
-	MwiTpsQueueLow                        pgtype.Int4
-	MwiDisableInitialUnsolicited          NullAstBoolValues
-	IgnoreUriUserOptions                  NullAstBoolValues
-	UseCalleridContact                    NullAstBoolValues
-	SendContactStatusOnUpdateRegistration NullAstBoolValues
-	TaskprocessorOverloadTrigger          NullPjsipTaskprocessorOverloadTriggerValues
-	Norefersub                            NullAstBoolValues
-	AllowSending180After183               NullAstBoolValues
-	AllCodecsOnEmptyReinvite              NullAstBoolValues
+	ID                                    string                                      `json:"id"`
+	MaxForwards                           pgtype.Int4                                 `json:"max_forwards"`
+	UserAgent                             pgtype.Text                                 `json:"user_agent"`
+	DefaultOutboundEndpoint               pgtype.Text                                 `json:"default_outbound_endpoint"`
+	Debug                                 pgtype.Text                                 `json:"debug"`
+	EndpointIdentifierOrder               pgtype.Text                                 `json:"endpoint_identifier_order"`
+	MaxInitialQualifyTime                 pgtype.Int4                                 `json:"max_initial_qualify_time"`
+	DefaultFromUser                       pgtype.Text                                 `json:"default_from_user"`
+	KeepAliveInterval                     pgtype.Int4                                 `json:"keep_alive_interval"`
+	Regcontext                            pgtype.Text                                 `json:"regcontext"`
+	ContactExpirationCheckInterval        pgtype.Int4                                 `json:"contact_expiration_check_interval"`
+	DefaultVoicemailExtension             pgtype.Text                                 `json:"default_voicemail_extension"`
+	DisableMultiDomain                    NullAstBoolValues                           `json:"disable_multi_domain"`
+	UnidentifiedRequestCount              pgtype.Int4                                 `json:"unidentified_request_count"`
+	UnidentifiedRequestPeriod             pgtype.Int4                                 `json:"unidentified_request_period"`
+	UnidentifiedRequestPruneInterval      pgtype.Int4                                 `json:"unidentified_request_prune_interval"`
+	DefaultRealm                          pgtype.Text                                 `json:"default_realm"`
+	MwiTpsQueueHigh                       pgtype.Int4                                 `json:"mwi_tps_queue_high"`
+	MwiTpsQueueLow                        pgtype.Int4                                 `json:"mwi_tps_queue_low"`
+	MwiDisableInitialUnsolicited          NullAstBoolValues                           `json:"mwi_disable_initial_unsolicited"`
+	IgnoreUriUserOptions                  NullAstBoolValues                           `json:"ignore_uri_user_options"`
+	UseCalleridContact                    NullAstBoolValues                           `json:"use_callerid_contact"`
+	SendContactStatusOnUpdateRegistration NullAstBoolValues                           `json:"send_contact_status_on_update_registration"`
+	TaskprocessorOverloadTrigger          NullPjsipTaskprocessorOverloadTriggerValues `json:"taskprocessor_overload_trigger"`
+	Norefersub                            NullAstBoolValues                           `json:"norefersub"`
+	AllowSending180After183               NullAstBoolValues                           `json:"allow_sending_180_after_183"`
+	AllCodecsOnEmptyReinvite              NullAstBoolValues                           `json:"all_codecs_on_empty_reinvite"`
 }
 
 type PsInboundPublication struct {
-	ID                       string
-	Endpoint                 pgtype.Text
-	EventAsteriskDevicestate pgtype.Text
-	EventAsteriskMwi         pgtype.Text
+	ID                       string      `json:"id"`
+	Endpoint                 pgtype.Text `json:"endpoint"`
+	EventAsteriskDevicestate pgtype.Text `json:"event_asterisk-devicestate"`
+	EventAsteriskMwi         pgtype.Text `json:"event_asterisk-mwi"`
 }
 
 type PsOutboundPublish struct {
-	ID              string
-	Expiration      pgtype.Int4
-	OutboundAuth    pgtype.Text
-	OutboundProxy   pgtype.Text
-	ServerUri       pgtype.Text
-	FromUri         pgtype.Text
-	ToUri           pgtype.Text
-	Event           pgtype.Text
-	MaxAuthAttempts pgtype.Int4
-	Transport       pgtype.Text
-	MultiUser       NullAstBoolValues
-	Body            pgtype.Text
-	Context         pgtype.Text
-	Exten           pgtype.Text
+	ID              string            `json:"id"`
+	Expiration      pgtype.Int4       `json:"expiration"`
+	OutboundAuth    pgtype.Text       `json:"outbound_auth"`
+	OutboundProxy   pgtype.Text       `json:"outbound_proxy"`
+	ServerUri       pgtype.Text       `json:"server_uri"`
+	FromUri         pgtype.Text       `json:"from_uri"`
+	ToUri           pgtype.Text       `json:"to_uri"`
+	Event           pgtype.Text       `json:"event"`
+	MaxAuthAttempts pgtype.Int4       `json:"max_auth_attempts"`
+	Transport       pgtype.Text       `json:"transport"`
+	MultiUser       NullAstBoolValues `json:"multi_user"`
+	Body            pgtype.Text       `json:"@body"`
+	Context         pgtype.Text       `json:"@context"`
+	Exten           pgtype.Text       `json:"@exten"`
 }
 
 type PsRegistration struct {
-	ID                     string
-	AuthRejectionPermanent NullAstBoolValues
-	ClientUri              pgtype.Text
-	ContactUser            pgtype.Text
-	Expiration             pgtype.Int4
-	MaxRetries             pgtype.Int4
-	OutboundAuth           pgtype.Text
-	OutboundProxy          pgtype.Text
-	RetryInterval          pgtype.Int4
-	ForbiddenRetryInterval pgtype.Int4
-	ServerUri              pgtype.Text
-	Transport              pgtype.Text
-	SupportPath            NullAstBoolValues
-	FatalRetryInterval     pgtype.Int4
-	Line                   NullAstBoolValues
-	Endpoint               pgtype.Text
-	SupportOutbound        NullAstBoolValues
-	ContactHeaderParams    pgtype.Text
-	MaxRandomInitialDelay  pgtype.Int4
-	SecurityNegotiation    NullSecurityNegotiationValues
-	SecurityMechanisms     pgtype.Text
-	UserAgent              pgtype.Text
+	ID                     string                        `json:"id"`
+	AuthRejectionPermanent NullAstBoolValues             `json:"auth_rejection_permanent"`
+	ClientUri              pgtype.Text                   `json:"client_uri"`
+	ContactUser            pgtype.Text                   `json:"contact_user"`
+	Expiration             pgtype.Int4                   `json:"expiration"`
+	MaxRetries             pgtype.Int4                   `json:"max_retries"`
+	OutboundAuth           pgtype.Text                   `json:"outbound_auth"`
+	OutboundProxy          pgtype.Text                   `json:"outbound_proxy"`
+	RetryInterval          pgtype.Int4                   `json:"retry_interval"`
+	ForbiddenRetryInterval pgtype.Int4                   `json:"forbidden_retry_interval"`
+	ServerUri              pgtype.Text                   `json:"server_uri"`
+	Transport              pgtype.Text                   `json:"transport"`
+	SupportPath            NullAstBoolValues             `json:"support_path"`
+	FatalRetryInterval     pgtype.Int4                   `json:"fatal_retry_interval"`
+	Line                   NullAstBoolValues             `json:"line"`
+	Endpoint               pgtype.Text                   `json:"endpoint"`
+	SupportOutbound        NullAstBoolValues             `json:"support_outbound"`
+	ContactHeaderParams    pgtype.Text                   `json:"contact_header_params"`
+	MaxRandomInitialDelay  pgtype.Int4                   `json:"max_random_initial_delay"`
+	SecurityNegotiation    NullSecurityNegotiationValues `json:"security_negotiation"`
+	SecurityMechanisms     pgtype.Text                   `json:"security_mechanisms"`
+	UserAgent              pgtype.Text                   `json:"user_agent"`
 }
 
 type PsResourceList struct {
-	ID                        string
-	ListItem                  pgtype.Text
-	Event                     pgtype.Text
-	FullState                 NullAstBoolValues
-	NotificationBatchInterval pgtype.Int4
-	ResourceDisplayName       NullAstBoolValues
+	ID                        string            `json:"id"`
+	ListItem                  pgtype.Text       `json:"list_item"`
+	Event                     pgtype.Text       `json:"event"`
+	FullState                 NullAstBoolValues `json:"full_state"`
+	NotificationBatchInterval pgtype.Int4       `json:"notification_batch_interval"`
+	ResourceDisplayName       NullAstBoolValues `json:"resource_display_name"`
 }
 
 type PsSubscriptionPersistence struct {
-	ID           string
-	Packet       pgtype.Text
-	SrcName      pgtype.Text
-	SrcPort      pgtype.Int4
-	TransportKey pgtype.Text
-	LocalName    pgtype.Text
-	LocalPort    pgtype.Int4
-	Cseq         pgtype.Int4
-	Tag          pgtype.Text
-	Endpoint     pgtype.Text
-	Expires      pgtype.Int4
-	ContactUri   pgtype.Text
-	PruneOnBoot  NullAstBoolValues
+	ID           string            `json:"id"`
+	Packet       pgtype.Text       `json:"packet"`
+	SrcName      pgtype.Text       `json:"src_name"`
+	SrcPort      pgtype.Int4       `json:"src_port"`
+	TransportKey pgtype.Text       `json:"transport_key"`
+	LocalName    pgtype.Text       `json:"local_name"`
+	LocalPort    pgtype.Int4       `json:"local_port"`
+	Cseq         pgtype.Int4       `json:"cseq"`
+	Tag          pgtype.Text       `json:"tag"`
+	Endpoint     pgtype.Text       `json:"endpoint"`
+	Expires      pgtype.Int4       `json:"expires"`
+	ContactUri   pgtype.Text       `json:"contact_uri"`
+	PruneOnBoot  NullAstBoolValues `json:"prune_on_boot"`
 }
 
 type PsSystem struct {
-	ID                       string
-	TimerT1                  pgtype.Int4
-	TimerB                   pgtype.Int4
-	CompactHeaders           NullAstBoolValues
-	ThreadpoolInitialSize    pgtype.Int4
-	ThreadpoolAutoIncrement  pgtype.Int4
-	ThreadpoolIdleTimeout    pgtype.Int4
-	ThreadpoolMaxSize        pgtype.Int4
-	DisableTcpSwitch         NullAstBoolValues
-	FollowEarlyMediaFork     NullAstBoolValues
-	AcceptMultipleSdpAnswers NullAstBoolValues
-	DisableRport             NullAstBoolValues
+	ID                       string            `json:"id"`
+	TimerT1                  pgtype.Int4       `json:"timer_t1"`
+	TimerB                   pgtype.Int4       `json:"timer_b"`
+	CompactHeaders           NullAstBoolValues `json:"compact_headers"`
+	ThreadpoolInitialSize    pgtype.Int4       `json:"threadpool_initial_size"`
+	ThreadpoolAutoIncrement  pgtype.Int4       `json:"threadpool_auto_increment"`
+	ThreadpoolIdleTimeout    pgtype.Int4       `json:"threadpool_idle_timeout"`
+	ThreadpoolMaxSize        pgtype.Int4       `json:"threadpool_max_size"`
+	DisableTcpSwitch         NullAstBoolValues `json:"disable_tcp_switch"`
+	FollowEarlyMediaFork     NullAstBoolValues `json:"follow_early_media_fork"`
+	AcceptMultipleSdpAnswers NullAstBoolValues `json:"accept_multiple_sdp_answers"`
+	DisableRport             NullAstBoolValues `json:"disable_rport"`
 }
 
 type PsTransport struct {
-	ID                       string
-	AsyncOperations          pgtype.Int4
-	Bind                     pgtype.Text
-	CaListFile               pgtype.Text
-	CertFile                 pgtype.Text
-	Cipher                   pgtype.Text
-	Domain                   pgtype.Text
-	ExternalMediaAddress     pgtype.Text
-	ExternalSignalingAddress pgtype.Text
-	ExternalSignalingPort    pgtype.Int4
-	Method                   NullPjsipTransportMethodValuesV2
-	LocalNet                 pgtype.Text
-	Password                 pgtype.Text
-	PrivKeyFile              pgtype.Text
-	Protocol                 NullPjsipTransportProtocolValuesV2
-	RequireClientCert        NullAstBoolValues
-	VerifyClient             NullAstBoolValues
-	VerifyServer             NullAstBoolValues
-	Tos                      pgtype.Text
-	Cos                      pgtype.Int4
-	AllowReload              NullAstBoolValues
-	SymmetricTransport       NullAstBoolValues
-	AllowWildcardCerts       NullAstBoolValues
-	TcpKeepaliveEnable       pgtype.Bool
-	TcpKeepaliveIdleTime     pgtype.Int4
-	TcpKeepaliveIntervalTime pgtype.Int4
-	TcpKeepaliveProbeCount   pgtype.Int4
+	ID                       string                             `json:"id"`
+	AsyncOperations          pgtype.Int4                        `json:"async_operations"`
+	Bind                     pgtype.Text                        `json:"bind"`
+	CaListFile               pgtype.Text                        `json:"ca_list_file"`
+	CertFile                 pgtype.Text                        `json:"cert_file"`
+	Cipher                   pgtype.Text                        `json:"cipher"`
+	Domain                   pgtype.Text                        `json:"domain"`
+	ExternalMediaAddress     pgtype.Text                        `json:"external_media_address"`
+	ExternalSignalingAddress pgtype.Text                        `json:"external_signaling_address"`
+	ExternalSignalingPort    pgtype.Int4                        `json:"external_signaling_port"`
+	Method                   NullPjsipTransportMethodValuesV2   `json:"method"`
+	LocalNet                 pgtype.Text                        `json:"local_net"`
+	Password                 pgtype.Text                        `json:"password"`
+	PrivKeyFile              pgtype.Text                        `json:"priv_key_file"`
+	Protocol                 NullPjsipTransportProtocolValuesV2 `json:"protocol"`
+	RequireClientCert        NullAstBoolValues                  `json:"require_client_cert"`
+	VerifyClient             NullAstBoolValues                  `json:"verify_client"`
+	VerifyServer             NullAstBoolValues                  `json:"verify_server"`
+	Tos                      pgtype.Text                        `json:"tos"`
+	Cos                      pgtype.Int4                        `json:"cos"`
+	AllowReload              NullAstBoolValues                  `json:"allow_reload"`
+	SymmetricTransport       NullAstBoolValues                  `json:"symmetric_transport"`
+	AllowWildcardCerts       NullAstBoolValues                  `json:"allow_wildcard_certs"`
+	TcpKeepaliveEnable       pgtype.Bool                        `json:"tcp_keepalive_enable"`
+	TcpKeepaliveIdleTime     pgtype.Int4                        `json:"tcp_keepalive_idle_time"`
+	TcpKeepaliveIntervalTime pgtype.Int4                        `json:"tcp_keepalive_interval_time"`
+	TcpKeepaliveProbeCount   pgtype.Int4                        `json:"tcp_keepalive_probe_count"`
 }
 
 type Queue struct {
-	Name                      string
-	Musiconhold               pgtype.Text
-	Announce                  pgtype.Text
-	Context                   pgtype.Text
-	Timeout                   pgtype.Int4
-	Ringinuse                 NullYesnoValues
-	Setinterfacevar           NullYesnoValues
-	Setqueuevar               NullYesnoValues
-	Setqueueentryvar          NullYesnoValues
-	MonitorFormat             pgtype.Text
-	Membermacro               pgtype.Text
-	Membergosub               pgtype.Text
-	QueueYouarenext           pgtype.Text
-	QueueThereare             pgtype.Text
-	QueueCallswaiting         pgtype.Text
-	QueueQuantity1            pgtype.Text
-	QueueQuantity2            pgtype.Text
-	QueueHoldtime             pgtype.Text
-	QueueMinutes              pgtype.Text
-	QueueMinute               pgtype.Text
-	QueueSeconds              pgtype.Text
-	QueueThankyou             pgtype.Text
-	QueueCallerannounce       pgtype.Text
-	QueueReporthold           pgtype.Text
-	AnnounceFrequency         pgtype.Int4
-	AnnounceToFirstUser       NullYesnoValues
-	MinAnnounceFrequency      pgtype.Int4
-	AnnounceRoundSeconds      pgtype.Int4
-	AnnounceHoldtime          pgtype.Text
-	AnnouncePosition          pgtype.Text
-	AnnouncePositionLimit     pgtype.Int4
-	PeriodicAnnounce          pgtype.Text
-	PeriodicAnnounceFrequency pgtype.Int4
-	RelativePeriodicAnnounce  NullYesnoValues
-	RandomPeriodicAnnounce    NullYesnoValues
-	Retry                     pgtype.Int4
-	Wrapuptime                pgtype.Int4
-	Penaltymemberslimit       pgtype.Int4
-	Autofill                  NullYesnoValues
-	MonitorType               pgtype.Text
-	Autopause                 NullQueueAutopauseValues
-	Autopausedelay            pgtype.Int4
-	Autopausebusy             NullYesnoValues
-	Autopauseunavail          NullYesnoValues
-	Maxlen                    pgtype.Int4
-	Servicelevel              pgtype.Int4
-	Strategy                  NullQueueStrategyValues
-	Joinempty                 pgtype.Text
-	Leavewhenempty            pgtype.Text
-	Reportholdtime            NullYesnoValues
-	Memberdelay               pgtype.Int4
-	Weight                    pgtype.Int4
-	Timeoutrestart            NullYesnoValues
-	Defaultrule               pgtype.Text
-	Timeoutpriority           pgtype.Text
+	Name                      string                   `json:"name"`
+	Musiconhold               pgtype.Text              `json:"musiconhold"`
+	Announce                  pgtype.Text              `json:"announce"`
+	Context                   pgtype.Text              `json:"context"`
+	Timeout                   pgtype.Int4              `json:"timeout"`
+	Ringinuse                 NullYesnoValues          `json:"ringinuse"`
+	Setinterfacevar           NullYesnoValues          `json:"setinterfacevar"`
+	Setqueuevar               NullYesnoValues          `json:"setqueuevar"`
+	Setqueueentryvar          NullYesnoValues          `json:"setqueueentryvar"`
+	MonitorFormat             pgtype.Text              `json:"monitor_format"`
+	Membermacro               pgtype.Text              `json:"membermacro"`
+	Membergosub               pgtype.Text              `json:"membergosub"`
+	QueueYouarenext           pgtype.Text              `json:"queue_youarenext"`
+	QueueThereare             pgtype.Text              `json:"queue_thereare"`
+	QueueCallswaiting         pgtype.Text              `json:"queue_callswaiting"`
+	QueueQuantity1            pgtype.Text              `json:"queue_quantity1"`
+	QueueQuantity2            pgtype.Text              `json:"queue_quantity2"`
+	QueueHoldtime             pgtype.Text              `json:"queue_holdtime"`
+	QueueMinutes              pgtype.Text              `json:"queue_minutes"`
+	QueueMinute               pgtype.Text              `json:"queue_minute"`
+	QueueSeconds              pgtype.Text              `json:"queue_seconds"`
+	QueueThankyou             pgtype.Text              `json:"queue_thankyou"`
+	QueueCallerannounce       pgtype.Text              `json:"queue_callerannounce"`
+	QueueReporthold           pgtype.Text              `json:"queue_reporthold"`
+	AnnounceFrequency         pgtype.Int4              `json:"announce_frequency"`
+	AnnounceToFirstUser       NullYesnoValues          `json:"announce_to_first_user"`
+	MinAnnounceFrequency      pgtype.Int4              `json:"min_announce_frequency"`
+	AnnounceRoundSeconds      pgtype.Int4              `json:"announce_round_seconds"`
+	AnnounceHoldtime          pgtype.Text              `json:"announce_holdtime"`
+	AnnouncePosition          pgtype.Text              `json:"announce_position"`
+	AnnouncePositionLimit     pgtype.Int4              `json:"announce_position_limit"`
+	PeriodicAnnounce          pgtype.Text              `json:"periodic_announce"`
+	PeriodicAnnounceFrequency pgtype.Int4              `json:"periodic_announce_frequency"`
+	RelativePeriodicAnnounce  NullYesnoValues          `json:"relative_periodic_announce"`
+	RandomPeriodicAnnounce    NullYesnoValues          `json:"random_periodic_announce"`
+	Retry                     pgtype.Int4              `json:"retry"`
+	Wrapuptime                pgtype.Int4              `json:"wrapuptime"`
+	Penaltymemberslimit       pgtype.Int4              `json:"penaltymemberslimit"`
+	Autofill                  NullYesnoValues          `json:"autofill"`
+	MonitorType               pgtype.Text              `json:"monitor_type"`
+	Autopause                 NullQueueAutopauseValues `json:"autopause"`
+	Autopausedelay            pgtype.Int4              `json:"autopausedelay"`
+	Autopausebusy             NullYesnoValues          `json:"autopausebusy"`
+	Autopauseunavail          NullYesnoValues          `json:"autopauseunavail"`
+	Maxlen                    pgtype.Int4              `json:"maxlen"`
+	Servicelevel              pgtype.Int4              `json:"servicelevel"`
+	Strategy                  NullQueueStrategyValues  `json:"strategy"`
+	Joinempty                 pgtype.Text              `json:"joinempty"`
+	Leavewhenempty            pgtype.Text              `json:"leavewhenempty"`
+	Reportholdtime            NullYesnoValues          `json:"reportholdtime"`
+	Memberdelay               pgtype.Int4              `json:"memberdelay"`
+	Weight                    pgtype.Int4              `json:"weight"`
+	Timeoutrestart            NullYesnoValues          `json:"timeoutrestart"`
+	Defaultrule               pgtype.Text              `json:"defaultrule"`
+	Timeoutpriority           pgtype.Text              `json:"timeoutpriority"`
 }
 
 type QueueMember struct {
-	QueueName      string
-	Interface      string
-	Membername     pgtype.Text
-	StateInterface pgtype.Text
-	Penalty        pgtype.Int4
-	Paused         pgtype.Int4
-	Uniqueid       int32
-	Wrapuptime     pgtype.Int4
-	Ringinuse      NullAstBoolValues
-	ReasonPaused   pgtype.Text
+	QueueName      string            `json:"queue_name"`
+	Interface      string            `json:"interface"`
+	Membername     pgtype.Text       `json:"membername"`
+	StateInterface pgtype.Text       `json:"state_interface"`
+	Penalty        pgtype.Int4       `json:"penalty"`
+	Paused         pgtype.Int4       `json:"paused"`
+	Uniqueid       int32             `json:"uniqueid"`
+	Wrapuptime     pgtype.Int4       `json:"wrapuptime"`
+	Ringinuse      NullAstBoolValues `json:"ringinuse"`
+	ReasonPaused   pgtype.Text       `json:"reason_paused"`
 }
 
 type QueueRule struct {
-	RuleName   string
-	Time       string
-	MinPenalty string
-	MaxPenalty string
+	RuleName   string `json:"rule_name"`
+	Time       string `json:"time"`
+	MinPenalty string `json:"min_penalty"`
+	MaxPenalty string `json:"max_penalty"`
 }
 
 type Sippeer struct {
-	ID                int32
-	Name              string
-	Ipaddr            pgtype.Text
-	Port              pgtype.Int4
-	Regseconds        pgtype.Int4
-	Defaultuser       pgtype.Text
-	Fullcontact       pgtype.Text
-	Regserver         pgtype.Text
-	Useragent         pgtype.Text
-	Lastms            pgtype.Int4
-	Host              pgtype.Text
-	Type              NullTypeValues
-	Context           pgtype.Text
-	Permit            pgtype.Text
-	Deny              pgtype.Text
-	Secret            pgtype.Text
-	Md5secret         pgtype.Text
-	Remotesecret      pgtype.Text
-	Transport         NullSipTransportValues
-	Dtmfmode          NullSipDtmfmodeValues
-	Directmedia       NullSipDirectmediaValuesV2
-	Nat               pgtype.Text
-	Callgroup         pgtype.Text
-	Pickupgroup       pgtype.Text
-	Language          pgtype.Text
-	Disallow          pgtype.Text
-	Allow             pgtype.Text
-	Insecure          pgtype.Text
-	Trustrpid         NullYesNoValues
-	Progressinband    NullSipProgressinbandValues
-	Promiscredir      NullYesNoValues
-	Useclientcode     NullYesNoValues
-	Accountcode       pgtype.Text
-	Setvar            pgtype.Text
-	Callerid          pgtype.Text
-	Amaflags          pgtype.Text
-	Callcounter       NullYesNoValues
-	Busylevel         pgtype.Int4
-	Allowoverlap      NullYesNoValues
-	Allowsubscribe    NullYesNoValues
-	Videosupport      NullYesNoValues
-	Maxcallbitrate    pgtype.Int4
-	Rfc2833compensate NullYesNoValues
-	Mailbox           pgtype.Text
-	SessionTimers     NullSipSessionTimersValues
-	SessionExpires    pgtype.Int4
-	SessionMinse      pgtype.Int4
-	SessionRefresher  NullSipSessionRefresherValues
-	T38ptUsertpsource pgtype.Text
-	Regexten          pgtype.Text
-	Fromdomain        pgtype.Text
-	Fromuser          pgtype.Text
-	Qualify           pgtype.Text
-	Defaultip         pgtype.Text
-	Rtptimeout        pgtype.Int4
-	Rtpholdtimeout    pgtype.Int4
-	Sendrpid          NullYesNoValues
-	Outboundproxy     pgtype.Text
-	Callbackextension pgtype.Text
-	Timert1           pgtype.Int4
-	Timerb            pgtype.Int4
-	Qualifyfreq       pgtype.Int4
-	Constantssrc      NullYesNoValues
-	Contactpermit     pgtype.Text
-	Contactdeny       pgtype.Text
-	Usereqphone       NullYesNoValues
-	Textsupport       NullYesNoValues
-	Faxdetect         NullYesNoValues
-	Buggymwi          NullYesNoValues
-	Auth              pgtype.Text
-	Fullname          pgtype.Text
-	Trunkname         pgtype.Text
-	CidNumber         pgtype.Text
-	Callingpres       NullSipCallingpresValues
-	Mohinterpret      pgtype.Text
-	Mohsuggest        pgtype.Text
-	Parkinglot        pgtype.Text
-	Hasvoicemail      NullYesNoValues
-	Subscribemwi      NullYesNoValues
-	Vmexten           pgtype.Text
-	Autoframing       NullYesNoValues
-	Rtpkeepalive      pgtype.Int4
-	CallLimit         pgtype.Int4
-	G726nonstandard   NullYesNoValues
-	Ignoresdpversion  NullYesNoValues
-	Allowtransfer     NullYesNoValues
-	Dynamic           NullYesNoValues
-	Path              pgtype.Text
-	Supportpath       NullYesNoValues
+	ID                int32                         `json:"id"`
+	Name              string                        `json:"name"`
+	Ipaddr            pgtype.Text                   `json:"ipaddr"`
+	Port              pgtype.Int4                   `json:"port"`
+	Regseconds        pgtype.Int4                   `json:"regseconds"`
+	Defaultuser       pgtype.Text                   `json:"defaultuser"`
+	Fullcontact       pgtype.Text                   `json:"fullcontact"`
+	Regserver         pgtype.Text                   `json:"regserver"`
+	Useragent         pgtype.Text                   `json:"useragent"`
+	Lastms            pgtype.Int4                   `json:"lastms"`
+	Host              pgtype.Text                   `json:"host"`
+	Type              NullTypeValues                `json:"type"`
+	Context           pgtype.Text                   `json:"context"`
+	Permit            pgtype.Text                   `json:"permit"`
+	Deny              pgtype.Text                   `json:"deny"`
+	Secret            pgtype.Text                   `json:"secret"`
+	Md5secret         pgtype.Text                   `json:"md5secret"`
+	Remotesecret      pgtype.Text                   `json:"remotesecret"`
+	Transport         NullSipTransportValues        `json:"transport"`
+	Dtmfmode          NullSipDtmfmodeValues         `json:"dtmfmode"`
+	Directmedia       NullSipDirectmediaValuesV2    `json:"directmedia"`
+	Nat               pgtype.Text                   `json:"nat"`
+	Callgroup         pgtype.Text                   `json:"callgroup"`
+	Pickupgroup       pgtype.Text                   `json:"pickupgroup"`
+	Language          pgtype.Text                   `json:"language"`
+	Disallow          pgtype.Text                   `json:"disallow"`
+	Allow             pgtype.Text                   `json:"allow"`
+	Insecure          pgtype.Text                   `json:"insecure"`
+	Trustrpid         NullYesNoValues               `json:"trustrpid"`
+	Progressinband    NullSipProgressinbandValues   `json:"progressinband"`
+	Promiscredir      NullYesNoValues               `json:"promiscredir"`
+	Useclientcode     NullYesNoValues               `json:"useclientcode"`
+	Accountcode       pgtype.Text                   `json:"accountcode"`
+	Setvar            pgtype.Text                   `json:"setvar"`
+	Callerid          pgtype.Text                   `json:"callerid"`
+	Amaflags          pgtype.Text                   `json:"amaflags"`
+	Callcounter       NullYesNoValues               `json:"callcounter"`
+	Busylevel         pgtype.Int4                   `json:"busylevel"`
+	Allowoverlap      NullYesNoValues               `json:"allowoverlap"`
+	Allowsubscribe    NullYesNoValues               `json:"allowsubscribe"`
+	Videosupport      NullYesNoValues               `json:"videosupport"`
+	Maxcallbitrate    pgtype.Int4                   `json:"maxcallbitrate"`
+	Rfc2833compensate NullYesNoValues               `json:"rfc2833compensate"`
+	Mailbox           pgtype.Text                   `json:"mailbox"`
+	SessionTimers     NullSipSessionTimersValues    `json:"session-timers"`
+	SessionExpires    pgtype.Int4                   `json:"session-expires"`
+	SessionMinse      pgtype.Int4                   `json:"session-minse"`
+	SessionRefresher  NullSipSessionRefresherValues `json:"session-refresher"`
+	T38ptUsertpsource pgtype.Text                   `json:"t38pt_usertpsource"`
+	Regexten          pgtype.Text                   `json:"regexten"`
+	Fromdomain        pgtype.Text                   `json:"fromdomain"`
+	Fromuser          pgtype.Text                   `json:"fromuser"`
+	Qualify           pgtype.Text                   `json:"qualify"`
+	Defaultip         pgtype.Text                   `json:"defaultip"`
+	Rtptimeout        pgtype.Int4                   `json:"rtptimeout"`
+	Rtpholdtimeout    pgtype.Int4                   `json:"rtpholdtimeout"`
+	Sendrpid          NullYesNoValues               `json:"sendrpid"`
+	Outboundproxy     pgtype.Text                   `json:"outboundproxy"`
+	Callbackextension pgtype.Text                   `json:"callbackextension"`
+	Timert1           pgtype.Int4                   `json:"timert1"`
+	Timerb            pgtype.Int4                   `json:"timerb"`
+	Qualifyfreq       pgtype.Int4                   `json:"qualifyfreq"`
+	Constantssrc      NullYesNoValues               `json:"constantssrc"`
+	Contactpermit     pgtype.Text                   `json:"contactpermit"`
+	Contactdeny       pgtype.Text                   `json:"contactdeny"`
+	Usereqphone       NullYesNoValues               `json:"usereqphone"`
+	Textsupport       NullYesNoValues               `json:"textsupport"`
+	Faxdetect         NullYesNoValues               `json:"faxdetect"`
+	Buggymwi          NullYesNoValues               `json:"buggymwi"`
+	Auth              pgtype.Text                   `json:"auth"`
+	Fullname          pgtype.Text                   `json:"fullname"`
+	Trunkname         pgtype.Text                   `json:"trunkname"`
+	CidNumber         pgtype.Text                   `json:"cid_number"`
+	Callingpres       NullSipCallingpresValues      `json:"callingpres"`
+	Mohinterpret      pgtype.Text                   `json:"mohinterpret"`
+	Mohsuggest        pgtype.Text                   `json:"mohsuggest"`
+	Parkinglot        pgtype.Text                   `json:"parkinglot"`
+	Hasvoicemail      NullYesNoValues               `json:"hasvoicemail"`
+	Subscribemwi      NullYesNoValues               `json:"subscribemwi"`
+	Vmexten           pgtype.Text                   `json:"vmexten"`
+	Autoframing       NullYesNoValues               `json:"autoframing"`
+	Rtpkeepalive      pgtype.Int4                   `json:"rtpkeepalive"`
+	CallLimit         pgtype.Int4                   `json:"call-limit"`
+	G726nonstandard   NullYesNoValues               `json:"g726nonstandard"`
+	Ignoresdpversion  NullYesNoValues               `json:"ignoresdpversion"`
+	Allowtransfer     NullYesNoValues               `json:"allowtransfer"`
+	Dynamic           NullYesNoValues               `json:"dynamic"`
+	Path              pgtype.Text                   `json:"path"`
+	Supportpath       NullYesNoValues               `json:"supportpath"`
 }
 
 type StirTn struct {
-	ID             string
-	PrivateKeyFile pgtype.Text
-	PublicCertUrl  pgtype.Text
-	AttestLevel    pgtype.Text
-	SendMky        NullAstBoolValues
+	ID             string            `json:"id"`
+	PrivateKeyFile pgtype.Text       `json:"private_key_file"`
+	PublicCertUrl  pgtype.Text       `json:"public_cert_url"`
+	AttestLevel    pgtype.Text       `json:"attest_level"`
+	SendMky        NullAstBoolValues `json:"send_mky"`
 }
 
 type Voicemail struct {
-	Uniqueid        int32
-	Context         string
-	Mailbox         string
-	Password        string
-	Fullname        pgtype.Text
-	Alias           pgtype.Text
-	Email           pgtype.Text
-	Pager           pgtype.Text
-	Attach          NullYesNoValues
-	Attachfmt       pgtype.Text
-	Serveremail     pgtype.Text
-	Language        pgtype.Text
-	Tz              pgtype.Text
-	Deletevoicemail NullYesNoValues
-	Saycid          NullYesNoValues
-	Sendvoicemail   NullYesNoValues
-	Review          NullYesNoValues
-	Tempgreetwarn   NullYesNoValues
-	Operator        NullYesNoValues
-	Envelope        NullYesNoValues
-	Sayduration     pgtype.Int4
-	Forcename       NullYesNoValues
-	Forcegreetings  NullYesNoValues
-	Callback        pgtype.Text
-	Dialout         pgtype.Text
-	Exitcontext     pgtype.Text
-	Maxmsg          pgtype.Int4
-	Volgain         pgtype.Numeric
-	Imapuser        pgtype.Text
-	Imappassword    pgtype.Text
-	Imapserver      pgtype.Text
-	Imapport        pgtype.Text
-	Imapflags       pgtype.Text
-	Stamp           pgtype.Timestamp
+	Uniqueid        int32            `json:"uniqueid"`
+	Context         string           `json:"context"`
+	Mailbox         string           `json:"mailbox"`
+	Password        string           `json:"password"`
+	Fullname        pgtype.Text      `json:"fullname"`
+	Alias           pgtype.Text      `json:"alias"`
+	Email           pgtype.Text      `json:"email"`
+	Pager           pgtype.Text      `json:"pager"`
+	Attach          NullYesNoValues  `json:"attach"`
+	Attachfmt       pgtype.Text      `json:"attachfmt"`
+	Serveremail     pgtype.Text      `json:"serveremail"`
+	Language        pgtype.Text      `json:"language"`
+	Tz              pgtype.Text      `json:"tz"`
+	Deletevoicemail NullYesNoValues  `json:"deletevoicemail"`
+	Saycid          NullYesNoValues  `json:"saycid"`
+	Sendvoicemail   NullYesNoValues  `json:"sendvoicemail"`
+	Review          NullYesNoValues  `json:"review"`
+	Tempgreetwarn   NullYesNoValues  `json:"tempgreetwarn"`
+	Operator        NullYesNoValues  `json:"operator"`
+	Envelope        NullYesNoValues  `json:"envelope"`
+	Sayduration     pgtype.Int4      `json:"sayduration"`
+	Forcename       NullYesNoValues  `json:"forcename"`
+	Forcegreetings  NullYesNoValues  `json:"forcegreetings"`
+	Callback        pgtype.Text      `json:"callback"`
+	Dialout         pgtype.Text      `json:"dialout"`
+	Exitcontext     pgtype.Text      `json:"exitcontext"`
+	Maxmsg          pgtype.Int4      `json:"maxmsg"`
+	Volgain         pgtype.Numeric   `json:"volgain"`
+	Imapuser        pgtype.Text      `json:"imapuser"`
+	Imappassword    pgtype.Text      `json:"imappassword"`
+	Imapserver      pgtype.Text      `json:"imapserver"`
+	Imapport        pgtype.Text      `json:"imapport"`
+	Imapflags       pgtype.Text      `json:"imapflags"`
+	Stamp           pgtype.Timestamp `json:"stamp"`
 }

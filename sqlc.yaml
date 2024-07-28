@@ -8,3 +8,4 @@ sql:
         package: sqlc
         out: internal/sqlc
         sql_package: pgx/v5
+        emit_json_tags: true
