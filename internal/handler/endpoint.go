@@ -8,7 +8,9 @@ import (
 	"github.com/crazybolillo/eryth/internal/sqlc"
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
+	"log/slog"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -29,9 +31,51 @@ type createEndpointRequest struct {
 func (e *Endpoint) Router() chi.Router {
 	r := chi.NewRouter()
 	r.Post("/", e.create)
+	r.Get("/list", e.list)
 	r.Delete("/{id}", e.delete)
 
 	return r
+}
+
+// @Summary List existing endpoints.
+// @Param limit query int false "Limit the amount of endpoints returned" default(15)
+// @Produce json
+// @Success 200 {object} []sqlc.ListEndpointsRow
+// @Failure 400
+// @Failure 500
+// @Tags endpoints
+// @Router /endpoint/list [get]
+func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
+	qlim := r.URL.Query().Get("limit")
+	limit := 15
+	if qlim != "" {
+		conv, err := strconv.Atoi(qlim)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		limit = conv
+	}
+
+	queries := sqlc.New(e.Conn)
+	endpoints, err := queries.ListEndpoints(r.Context(), int32(limit))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	content, err := json.Marshal(endpoints)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(content)
+	if err != nil {
+		slog.Error("Failed to write response", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
+	}
+	w.WriteHeader(http.StatusOK)
 }
 
 // @Summary Create a new endpoint.

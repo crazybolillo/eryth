@@ -38,6 +38,40 @@ func (q *Queries) DeleteEndpoint(ctx context.Context, id string) error {
 	return err
 }
 
+const listEndpoints = `-- name: ListEndpoints :many
+SELECT
+    id, context, transport
+FROM
+    ps_endpoints
+LIMIT $1
+`
+
+type ListEndpointsRow struct {
+	ID        string      `json:"id"`
+	Context   pgtype.Text `json:"context"`
+	Transport pgtype.Text `json:"transport"`
+}
+
+func (q *Queries) ListEndpoints(ctx context.Context, limit int32) ([]ListEndpointsRow, error) {
+	rows, err := q.db.Query(ctx, listEndpoints, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListEndpointsRow
+	for rows.Next() {
+		var i ListEndpointsRow
+		if err := rows.Scan(&i.ID, &i.Context, &i.Transport); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const newAOR = `-- name: NewAOR :exec
 INSERT INTO ps_aors
     (id, max_contacts)
@@ -46,8 +80,8 @@ VALUES
 `
 
 type NewAORParams struct {
-	ID          string
-	MaxContacts pgtype.Int4
+	ID          string      `json:"id"`
+	MaxContacts pgtype.Int4 `json:"max_contacts"`
 }
 
 func (q *Queries) NewAOR(ctx context.Context, arg NewAORParams) error {
@@ -63,10 +97,10 @@ VALUES
 `
 
 type NewEndpointParams struct {
-	ID        string
-	Transport pgtype.Text
-	Context   pgtype.Text
-	Allow     pgtype.Text
+	ID        string      `json:"id"`
+	Transport pgtype.Text `json:"transport"`
+	Context   pgtype.Text `json:"context"`
+	Allow     pgtype.Text `json:"allow"`
 }
 
 func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) error {
@@ -87,10 +121,10 @@ VALUES
 `
 
 type NewMD5AuthParams struct {
-	ID       string
-	Username pgtype.Text
-	Realm    pgtype.Text
-	Md5Cred  pgtype.Text
+	ID       string      `json:"id"`
+	Username pgtype.Text `json:"username"`
+	Realm    pgtype.Text `json:"realm"`
+	Md5Cred  pgtype.Text `json:"md5_cred"`
 }
 
 func (q *Queries) NewMD5Auth(ctx context.Context, arg NewMD5AuthParams) error {
