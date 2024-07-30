@@ -1565,7 +1565,6 @@ type AlembicVersion struct {
 }
 
 type Cdr struct {
-	ID          int64            `json:"id"`
 	Accountcode pgtype.Text      `json:"accountcode"`
 	Src         pgtype.Text      `json:"src"`
 	Dst         pgtype.Text      `json:"dst"`
