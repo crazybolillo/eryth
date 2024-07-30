@@ -1586,6 +1586,7 @@ type Cdr struct {
 	Linkedid    pgtype.Text      `json:"linkedid"`
 	Peeraccount pgtype.Text      `json:"peeraccount"`
 	Sequence    pgtype.Int4      `json:"sequence"`
+	ID          int64            `json:"id"`
 }
 
 type Extension struct {
