@@ -1,4 +1,18 @@
 definitions:
+  bouncer.Response:
+    properties:
+      allow:
+        type: boolean
+      destination:
+        type: string
+    type: object
+  handler.AuthorizationRequest:
+    properties:
+      endpoint:
+        type: string
+      extension:
+        type: string
+    type: object
   handler.createEndpointRequest:
     properties:
       codecs:
@@ -43,6 +57,31 @@ info:
   title: Asterisk Administration API
   version: "1.0"
 paths:
+  /bouncer:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Action to be reviewed
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/handler.AuthorizationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bouncer.Response'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Determine whether the specified action (call) is allowed or not.
+      tags:
+      - bouncer
   /endpoint:
     post:
       consumes:

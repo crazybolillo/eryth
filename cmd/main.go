@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/crazybolillo/eryth/internal/bouncer"
 	"github.com/crazybolillo/eryth/internal/handler"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -74,6 +75,10 @@ func serve(ctx context.Context) error {
 
 	endpoint := handler.Endpoint{Conn: conn}
 	r.Mount("/endpoint", endpoint.Router())
+
+	checker := &bouncer.Bouncer{Conn: conn}
+	authorization := handler.Authorization{Bouncer: checker}
+	r.Mount("/bouncer", authorization.Router())
 
 	slog.Info("Listening on :8080")
 	return http.ListenAndServe(":8080", r)
