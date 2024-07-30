@@ -38,18 +38,39 @@ func (q *Queries) DeleteEndpoint(ctx context.Context, id string) error {
 	return err
 }
 
-const listEndpoints = `-- name: ListEndpoints :many
+const getEndpointByExtension = `-- name: GetEndpointByExtension :one
 SELECT
-    id, context, transport
+    ps_endpoints.id
 FROM
     ps_endpoints
+INNER JOIN
+    ery_extension ee on ps_endpoints.sid = ee.endpoint_id
+WHERE
+    ee.extension = $1
+`
+
+func (q *Queries) GetEndpointByExtension(ctx context.Context, extension pgtype.Text) (string, error) {
+	row := q.db.QueryRow(ctx, getEndpointByExtension, extension)
+	var id string
+	err := row.Scan(&id)
+	return id, err
+}
+
+const listEndpoints = `-- name: ListEndpoints :many
+SELECT
+    pe.id, pe.context, ee.extension
+FROM
+    ps_endpoints pe
+LEFT JOIN
+    ery_extension ee
+ON ee.endpoint_id = pe.sid
 LIMIT $1
 `
 
 type ListEndpointsRow struct {
 	ID        string      `json:"id"`
 	Context   pgtype.Text `json:"context"`
-	Transport pgtype.Text `json:"transport"`
+	Extension pgtype.Text `json:"extension"`
 }
 
 func (q *Queries) ListEndpoints(ctx context.Context, limit int32) ([]ListEndpointsRow, error) {
@@ -61,7 +82,7 @@ func (q *Queries) ListEndpoints(ctx context.Context, limit int32) ([]ListEndpoin
 	var items []ListEndpointsRow
 	for rows.Next() {
 		var i ListEndpointsRow
-		if err := rows.Scan(&i.ID, &i.Context, &i.Transport); err != nil {
+		if err := rows.Scan(&i.ID, &i.Context, &i.Extension); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

@@ -28,9 +28,12 @@ DELETE FROM ps_auths WHERE id = $1;
 
 -- name: ListEndpoints :many
 SELECT
-    id, context, transport
+    pe.id, pe.context, ee.extension
 FROM
-    ps_endpoints
+    ps_endpoints pe
+LEFT JOIN
+    ery_extension ee
+ON ee.endpoint_id = pe.sid
 LIMIT $1;
 
 -- name: NewExtension :exec
@@ -38,3 +41,13 @@ INSERT INTO ery_extension
     (endpoint_id, extension)
 VALUES
     ($1, $2);
+
+-- name: GetEndpointByExtension :one
+SELECT
+    ps_endpoints.id
+FROM
+    ps_endpoints
+INNER JOIN
+    ery_extension ee on ps_endpoints.sid = ee.endpoint_id
+WHERE
+    ee.extension = $1;
