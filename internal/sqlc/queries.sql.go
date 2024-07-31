@@ -89,11 +89,12 @@ func (q *Queries) NewAOR(ctx context.Context, arg NewAORParams) error {
 	return err
 }
 
-const newEndpoint = `-- name: NewEndpoint :exec
+const newEndpoint = `-- name: NewEndpoint :one
 INSERT INTO ps_endpoints
     (id, transport, aors, auth, context, disallow, allow)
 VALUES
     ($1, $2, $1, $1, $3, 'all', $4)
+RETURNING sid
 `
 
 type NewEndpointParams struct {
@@ -103,13 +104,32 @@ type NewEndpointParams struct {
 	Allow     pgtype.Text `json:"allow"`
 }
 
-func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) error {
-	_, err := q.db.Exec(ctx, newEndpoint,
+func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) (int32, error) {
+	row := q.db.QueryRow(ctx, newEndpoint,
 		arg.ID,
 		arg.Transport,
 		arg.Context,
 		arg.Allow,
 	)
+	var sid int32
+	err := row.Scan(&sid)
+	return sid, err
+}
+
+const newExtension = `-- name: NewExtension :exec
+INSERT INTO ery_extension
+    (endpoint_id, extension)
+VALUES
+    ($1, $2)
+`
+
+type NewExtensionParams struct {
+	EndpointID int32       `json:"endpoint_id"`
+	Extension  pgtype.Text `json:"extension"`
+}
+
+func (q *Queries) NewExtension(ctx context.Context, arg NewExtensionParams) error {
+	_, err := q.db.Exec(ctx, newExtension, arg.EndpointID, arg.Extension)
 	return err
 }
 

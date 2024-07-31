@@ -7,6 +7,8 @@ definitions:
         type: array
       context:
         type: string
+      extension:
+        type: string
       id:
         type: string
       max_contacts:
@@ -18,13 +20,20 @@ definitions:
       transport:
         type: string
     type: object
+  handler.listEndpointsRequest:
+    properties:
+      endpoints:
+        items:
+          $ref: '#/definitions/sqlc.ListEndpointsRow'
+        type: array
+    type: object
   sqlc.ListEndpointsRow:
     properties:
       context:
         type: string
-      id:
+      extension:
         type: string
-      transport:
+      id:
         type: string
     type: object
 host: localhost:8080
@@ -87,9 +96,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/sqlc.ListEndpointsRow'
-            type: array
+            $ref: '#/definitions/handler.listEndpointsRequest'
         "400":
           description: Bad Request
         "500":

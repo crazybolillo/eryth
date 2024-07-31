@@ -1589,6 +1589,12 @@ type Cdr struct {
 	ID          int64            `json:"id"`
 }
 
+type EryExtension struct {
+	ID         int32       `json:"id"`
+	EndpointID int32       `json:"endpoint_id"`
+	Extension  pgtype.Text `json:"extension"`
+}
+
 type Extension struct {
 	ID       int64  `json:"id"`
 	Context  string `json:"context"`
@@ -1887,6 +1893,7 @@ type PsEndpoint struct {
 	SecurityMechanisms              pgtype.Text                               `json:"security_mechanisms"`
 	SendAoc                         NullAstBoolValues                         `json:"send_aoc"`
 	OverlapContext                  pgtype.Text                               `json:"overlap_context"`
+	Sid                             int32                                     `json:"sid"`
 }
 
 type PsEndpointIDIp struct {

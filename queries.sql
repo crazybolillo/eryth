@@ -10,11 +10,12 @@ INSERT INTO ps_aors
 VALUES
     ($1, $2);
 
--- name: NewEndpoint :exec
+-- name: NewEndpoint :one
 INSERT INTO ps_endpoints
     (id, transport, aors, auth, context, disallow, allow)
 VALUES
-    ($1, $2, $1, $1, $3, 'all', $4);
+    ($1, $2, $1, $1, $3, 'all', $4)
+RETURNING sid;
 
 -- name: DeleteEndpoint :exec
 DELETE FROM ps_endpoints WHERE id = $1;
@@ -31,3 +32,9 @@ SELECT
 FROM
     ps_endpoints
 LIMIT $1;
+
+-- name: NewExtension :exec
+INSERT INTO ery_extension
+    (endpoint_id, extension)
+VALUES
+    ($1, $2);
