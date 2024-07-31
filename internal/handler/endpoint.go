@@ -22,10 +22,15 @@ type createEndpointRequest struct {
 	ID          string   `json:"id"`
 	Password    string   `json:"password"`
 	Realm       string   `json:"realm,omitempty"`
-	Transport   string   `json:"transport"`
+	Transport   string   `json:"transport,omitempty"`
 	Context     string   `json:"context"`
 	Codecs      []string `json:"codecs"`
 	MaxContacts int32    `json:"max_contacts,omitempty"`
+	Extension   string   `json:"extension,omitempty"`
+}
+
+type listEndpointsRequest struct {
+	Endpoints []sqlc.ListEndpointsRow `json:"endpoints"`
 }
 
 func (e *Endpoint) Router() chi.Router {
@@ -40,7 +45,7 @@ func (e *Endpoint) Router() chi.Router {
 // @Summary List existing endpoints.
 // @Param limit query int false "Limit the amount of endpoints returned" default(15)
 // @Produce json
-// @Success 200 {object} []sqlc.ListEndpointsRow
+// @Success 200 {object} listEndpointsRequest
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
@@ -60,11 +65,18 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 	queries := sqlc.New(e.Conn)
 	endpoints, err := queries.ListEndpoints(r.Context(), int32(limit))
 	if err != nil {
+		slog.Error("Query execution failed", slog.String("path", r.URL.Path), slog.String("msg", err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	if endpoints == nil {
+		endpoints = []sqlc.ListEndpointsRow{}
+	}
 
-	content, err := json.Marshal(endpoints)
+	response := listEndpointsRequest{
+		Endpoints: endpoints,
+	}
+	content, err := json.Marshal(response)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -120,7 +132,7 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = queries.NewEndpoint(r.Context(), sqlc.NewEndpointParams{
+	sid, err := queries.NewEndpoint(r.Context(), sqlc.NewEndpointParams{
 		ID:        payload.ID,
 		Transport: db.Text(payload.Transport),
 		Context:   db.Text(payload.Context),
@@ -138,6 +150,17 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+
+	if payload.Extension != "" {
+		err = queries.NewExtension(r.Context(), sqlc.NewExtensionParams{
+			EndpointID: sid,
+			Extension:  db.Text(payload.Extension),
+		})
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	err = tx.Commit(r.Context())
