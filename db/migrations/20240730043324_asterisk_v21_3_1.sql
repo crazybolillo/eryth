@@ -1,4 +1,4 @@
--- migrate:upclear
+-- migrate:up
 CREATE TYPE public.ast_bool_values AS ENUM (
     '0',
     '1',
