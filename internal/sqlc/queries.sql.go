@@ -40,25 +40,37 @@ func (q *Queries) DeleteEndpoint(ctx context.Context, id string) error {
 
 const getEndpointByExtension = `-- name: GetEndpointByExtension :one
 SELECT
-    ps_endpoints.id
+    dest.id, src.callerid
 FROM
-    ps_endpoints
+    ps_endpoints dest
 INNER JOIN
-    ery_extension ee on ps_endpoints.sid = ee.endpoint_id
+    ery_extension ee ON dest.sid = ee.endpoint_id
+INNER JOIN
+    ps_endpoints src ON src.id = $1
 WHERE
-    ee.extension = $1
+    ee.extension = $2
 `
 
-func (q *Queries) GetEndpointByExtension(ctx context.Context, extension pgtype.Text) (string, error) {
-	row := q.db.QueryRow(ctx, getEndpointByExtension, extension)
-	var id string
-	err := row.Scan(&id)
-	return id, err
+type GetEndpointByExtensionParams struct {
+	ID        string      `json:"id"`
+	Extension pgtype.Text `json:"extension"`
+}
+
+type GetEndpointByExtensionRow struct {
+	ID       string      `json:"id"`
+	Callerid pgtype.Text `json:"callerid"`
+}
+
+func (q *Queries) GetEndpointByExtension(ctx context.Context, arg GetEndpointByExtensionParams) (GetEndpointByExtensionRow, error) {
+	row := q.db.QueryRow(ctx, getEndpointByExtension, arg.ID, arg.Extension)
+	var i GetEndpointByExtensionRow
+	err := row.Scan(&i.ID, &i.Callerid)
+	return i, err
 }
 
 const listEndpoints = `-- name: ListEndpoints :many
 SELECT
-    pe.id, pe.context, ee.extension
+    pe.id, pe.callerid, pe.context, ee.extension
 FROM
     ps_endpoints pe
 LEFT JOIN
@@ -69,6 +81,7 @@ LIMIT $1
 
 type ListEndpointsRow struct {
 	ID        string      `json:"id"`
+	Callerid  pgtype.Text `json:"callerid"`
 	Context   pgtype.Text `json:"context"`
 	Extension pgtype.Text `json:"extension"`
 }
@@ -82,7 +95,12 @@ func (q *Queries) ListEndpoints(ctx context.Context, limit int32) ([]ListEndpoin
 	var items []ListEndpointsRow
 	for rows.Next() {
 		var i ListEndpointsRow
-		if err := rows.Scan(&i.ID, &i.Context, &i.Extension); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Callerid,
+			&i.Context,
+			&i.Extension,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -112,9 +130,9 @@ func (q *Queries) NewAOR(ctx context.Context, arg NewAORParams) error {
 
 const newEndpoint = `-- name: NewEndpoint :one
 INSERT INTO ps_endpoints
-    (id, transport, aors, auth, context, disallow, allow)
+    (id, transport, aors, auth, context, disallow, allow, callerid)
 VALUES
-    ($1, $2, $1, $1, $3, 'all', $4)
+    ($1, $2, $1, $1, $3, 'all', $4, $5)
 RETURNING sid
 `
 
@@ -123,6 +141,7 @@ type NewEndpointParams struct {
 	Transport pgtype.Text `json:"transport"`
 	Context   pgtype.Text `json:"context"`
 	Allow     pgtype.Text `json:"allow"`
+	Callerid  pgtype.Text `json:"callerid"`
 }
 
 func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) (int32, error) {
@@ -131,6 +150,7 @@ func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) (int32
 		arg.Transport,
 		arg.Context,
 		arg.Allow,
+		arg.Callerid,
 	)
 	var sid int32
 	err := row.Scan(&sid)
