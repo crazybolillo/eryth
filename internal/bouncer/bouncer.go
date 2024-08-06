@@ -11,6 +11,7 @@ import (
 type Response struct {
 	Allow       bool   `json:"allow"`
 	Destination string `json:"destination"`
+	CallerID    string `json:"callerid"`
 }
 
 type Bouncer struct {
@@ -30,7 +31,10 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) Response {
 	}
 
 	queries := sqlc.New(tx)
-	destination, err := queries.GetEndpointByExtension(ctx, db.Text(dialed))
+	row, err := queries.GetEndpointByExtension(ctx, sqlc.GetEndpointByExtensionParams{
+		ID:        endpoint,
+		Extension: db.Text(dialed),
+	})
 	if err != nil {
 		slog.Error("Failed to retrieve endpoint", slog.String("dialed", dialed), slog.String("reason", err.Error()))
 		return result
@@ -38,6 +42,7 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) Response {
 
 	return Response{
 		Allow:       true,
-		Destination: destination,
+		Destination: row.ID,
+		CallerID:    row.Callerid.String,
 	}
 }

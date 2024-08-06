@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"github.com/crazybolillo/eryth/internal/db"
 	"github.com/crazybolillo/eryth/internal/sqlc"
 	"github.com/go-chi/chi/v5"
@@ -27,10 +28,18 @@ type createEndpointRequest struct {
 	Codecs      []string `json:"codecs"`
 	MaxContacts int32    `json:"max_contacts,omitempty"`
 	Extension   string   `json:"extension,omitempty"`
+	DisplayName string   `json:"display_name"`
+}
+
+type listEndpointEntry struct {
+	ID          string `json:"id"`
+	Extension   string `json:"extension"`
+	Context     string `json:"context"`
+	DisplayName string `json:"display_name"`
 }
 
 type listEndpointsRequest struct {
-	Endpoints []sqlc.ListEndpointsRow `json:"endpoints"`
+	Endpoints []listEndpointEntry `json:"endpoints"`
 }
 
 func (e *Endpoint) Router() chi.Router {
@@ -40,6 +49,27 @@ func (e *Endpoint) Router() chi.Router {
 	r.Delete("/{id}", e.delete)
 
 	return r
+}
+
+// displayNameFromClid extracts the display name from a Caller ID. It is expected for the Caller ID to be in
+// the following format: "Display Name" <username>
+// If no display name is found, an empty string is returned.
+func displayNameFromClid(callerID string) string {
+	if callerID == "" {
+		return ""
+	}
+
+	start := strings.Index(callerID, `"`)
+	if start != 0 {
+		return ""
+	}
+
+	end := strings.LastIndex(callerID, `"`)
+	if end == -1 || end < 1 {
+		return ""
+	}
+
+	return callerID[1:end]
 }
 
 // @Summary List existing endpoints.
@@ -63,16 +93,26 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	queries := sqlc.New(e.Conn)
-	endpoints, err := queries.ListEndpoints(r.Context(), int32(limit))
+	rows, err := queries.ListEndpoints(r.Context(), int32(limit))
 	if err != nil {
 		slog.Error("Query execution failed", slog.String("path", r.URL.Path), slog.String("msg", err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	if endpoints == nil {
-		endpoints = []sqlc.ListEndpointsRow{}
+	if rows == nil {
+		rows = []sqlc.ListEndpointsRow{}
 	}
 
+	endpoints := make([]listEndpointEntry, len(rows))
+	for idx := range len(rows) {
+		row := rows[idx]
+		endpoints[idx] = listEndpointEntry{
+			ID:          row.ID,
+			Extension:   row.Extension.String,
+			Context:     row.Context.String,
+			DisplayName: displayNameFromClid(row.Callerid.String),
+		}
+	}
 	response := listEndpointsRequest{
 		Endpoints: endpoints,
 	}
@@ -137,6 +177,7 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 		Transport: db.Text(payload.Transport),
 		Context:   db.Text(payload.Context),
 		Allow:     db.Text(strings.Join(payload.Codecs, ",")),
+		Callerid:  db.Text(fmt.Sprintf(`"%s" <%s>`, payload.DisplayName, payload.ID)),
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

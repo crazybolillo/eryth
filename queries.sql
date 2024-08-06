@@ -12,9 +12,9 @@ VALUES
 
 -- name: NewEndpoint :one
 INSERT INTO ps_endpoints
-    (id, transport, aors, auth, context, disallow, allow)
+    (id, transport, aors, auth, context, disallow, allow, callerid)
 VALUES
-    ($1, $2, $1, $1, $3, 'all', $4)
+    ($1, $2, $1, $1, $3, 'all', $4, $5)
 RETURNING sid;
 
 -- name: DeleteEndpoint :exec
@@ -28,7 +28,7 @@ DELETE FROM ps_auths WHERE id = $1;
 
 -- name: ListEndpoints :many
 SELECT
-    pe.id, pe.context, ee.extension
+    pe.id, pe.callerid, pe.context, ee.extension
 FROM
     ps_endpoints pe
 LEFT JOIN
@@ -44,10 +44,12 @@ VALUES
 
 -- name: GetEndpointByExtension :one
 SELECT
-    ps_endpoints.id
+    dest.id, src.callerid
 FROM
-    ps_endpoints
+    ps_endpoints dest
 INNER JOIN
-    ery_extension ee on ps_endpoints.sid = ee.endpoint_id
+    ery_extension ee ON dest.sid = ee.endpoint_id
+INNER JOIN
+    ps_endpoints src ON src.id = $1
 WHERE
-    ee.extension = $1;
+    ee.extension = $2;

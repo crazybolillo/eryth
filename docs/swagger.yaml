@@ -3,6 +3,8 @@ definitions:
     properties:
       allow:
         type: boolean
+      callerid:
+        type: string
       destination:
         type: string
     type: object
@@ -21,6 +23,8 @@ definitions:
         type: array
       context:
         type: string
+      display_name:
+        type: string
       extension:
         type: string
       id:
@@ -34,21 +38,23 @@ definitions:
       transport:
         type: string
     type: object
-  handler.listEndpointsRequest:
-    properties:
-      endpoints:
-        items:
-          $ref: '#/definitions/sqlc.ListEndpointsRow'
-        type: array
-    type: object
-  sqlc.ListEndpointsRow:
+  handler.listEndpointEntry:
     properties:
       context:
+        type: string
+      display_name:
         type: string
       extension:
         type: string
       id:
         type: string
+    type: object
+  handler.listEndpointsRequest:
+    properties:
+      endpoints:
+        items:
+          $ref: '#/definitions/handler.listEndpointEntry'
+        type: array
     type: object
 host: localhost:8080
 info:
@@ -79,7 +85,8 @@ paths:
           description: Bad Request
         "500":
           description: Internal Server Error
-      summary: Determine whether the specified action (call) is allowed or not.
+      summary: Determine whether the specified action (call) is allowed or not and
+        provide details on how
       tags:
       - bouncer
   /endpoint:

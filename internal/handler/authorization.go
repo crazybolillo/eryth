@@ -29,7 +29,8 @@ func (e *Authorization) Router() chi.Router {
 	return r
 }
 
-// @Summary Determine whether the specified action (call) is allowed or not.
+// @Summary Determine whether the specified action (call) is allowed or not and provide details on how
+// to accomplish it.
 // @Accept json
 // @Produce json
 // @Param payload body AuthorizationRequest true "Action to be reviewed"
