@@ -41,17 +41,17 @@ func serve(ctx context.Context) error {
 		return fmt.Errorf("missing Database URL")
 	}
 
-	url, err := url.Parse(dbUrl)
+	u, err := url.Parse(dbUrl)
 	if err != nil {
 		slog.Error("Invalid database URL", "reason", err.Error())
 		return err
 	}
 	slog.Info(
 		"Connecting to database",
-		slog.String("host", url.Host),
-		slog.String("port", url.Port()),
-		slog.String("user", url.User.Username()),
-		slog.String("database", url.Path[1:]),
+		slog.String("host", u.Host),
+		slog.String("port", u.Port()),
+		slog.String("user", u.User.Username()),
+		slog.String("database", u.Path[1:]),
 	)
 
 	conn, err := pgx.Connect(ctx, os.Getenv("DATABASE_URL"))
