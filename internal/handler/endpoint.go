@@ -26,16 +26,16 @@ type createEndpointRequest struct {
 	Transport   string   `json:"transport,omitempty"`
 	Context     string   `json:"context"`
 	Codecs      []string `json:"codecs"`
-	MaxContacts int32    `json:"max_contacts,omitempty"`
+	MaxContacts int32    `json:"maxContacts,omitempty"`
 	Extension   string   `json:"extension,omitempty"`
-	DisplayName string   `json:"display_name"`
+	DisplayName string   `json:"displayName"`
 }
 
 type listEndpointEntry struct {
 	ID          string `json:"id"`
 	Extension   string `json:"extension"`
 	Context     string `json:"context"`
-	DisplayName string `json:"display_name"`
+	DisplayName string `json:"displayName"`
 }
 
 type listEndpointsRequest struct {
@@ -45,7 +45,7 @@ type listEndpointsRequest struct {
 func (e *Endpoint) Router() chi.Router {
 	r := chi.NewRouter()
 	r.Post("/", e.create)
-	r.Get("/list", e.list)
+	r.Get("/", e.list)
 	r.Delete("/{id}", e.delete)
 
 	return r
@@ -79,7 +79,7 @@ func displayNameFromClid(callerID string) string {
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
-// @Router /endpoint/list [get]
+// @Router /endpoints [get]
 func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 	qlim := r.URL.Query().Get("limit")
 	limit := 15
@@ -137,7 +137,7 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
-// @Router /endpoint [post]
+// @Router /endpoints [post]
 func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	payload := createEndpointRequest{
@@ -219,7 +219,7 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
-// @Router /endpoint/{id} [delete]
+// @Router /endpoints/{id} [delete]
 func (e *Endpoint) delete(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {
