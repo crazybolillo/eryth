@@ -74,7 +74,7 @@ func serve(ctx context.Context) error {
 	r.Use(middleware.AllowContentEncoding("application/json"))
 
 	endpoint := handler.Endpoint{Conn: conn}
-	r.Mount("/endpoint", endpoint.Router())
+	r.Mount("/endpoints", endpoint.Router())
 
 	checker := &bouncer.Bouncer{Conn: conn}
 	authorization := handler.Authorization{Bouncer: checker}
