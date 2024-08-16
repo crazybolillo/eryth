@@ -28,7 +28,7 @@ DELETE FROM ps_auths WHERE id = $1;
 
 -- name: ListEndpoints :many
 SELECT
-    pe.id, pe.callerid, pe.context, ee.extension
+    pe.sid, pe.id, pe.callerid, pe.context, ee.extension
 FROM
     ps_endpoints pe
 LEFT JOIN
@@ -53,3 +53,15 @@ INNER JOIN
     ps_endpoints src ON src.id = $1
 WHERE
     ee.extension = $2;
+
+-- name: GetEndpointByID :one
+SELECT
+    pe.id, pe.callerid, pe.context, ee.extension, pe.transport, aor.max_contacts, pe.allow
+FROM
+    ps_endpoints pe
+INNER JOIN
+    ery_extension ee ON ee.endpoint_id = pe.sid
+INNER JOIN
+    ps_aors aor ON aor.id = pe.id
+WHERE
+    pe.sid = $1;

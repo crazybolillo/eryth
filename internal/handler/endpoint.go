@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/crazybolillo/eryth/internal/db"
 	"github.com/crazybolillo/eryth/internal/sqlc"
@@ -32,20 +33,32 @@ type createEndpointRequest struct {
 }
 
 type listEndpointEntry struct {
+	Sid         int32  `json:"sid"`
 	ID          string `json:"id"`
 	Extension   string `json:"extension"`
 	Context     string `json:"context"`
 	DisplayName string `json:"displayName"`
 }
 
-type listEndpointsRequest struct {
+type listEndpointsResponse struct {
 	Endpoints []listEndpointEntry `json:"endpoints"`
+}
+
+type getEndpointResponse struct {
+	ID          string   `json:"id"`
+	DisplayName string   `json:"displayName"`
+	Transport   string   `json:"transport"`
+	Context     string   `json:"context"`
+	Codecs      []string `json:"codecs"`
+	MaxContacts int32    `json:"maxContacts"`
+	Extension   string   `json:"extension"`
 }
 
 func (e *Endpoint) Router() chi.Router {
 	r := chi.NewRouter()
 	r.Post("/", e.create)
 	r.Get("/", e.list)
+	r.Get("/{sid}", e.get)
 	r.Delete("/{id}", e.delete)
 
 	return r
@@ -72,10 +85,72 @@ func displayNameFromClid(callerID string) string {
 	return callerID[1:end]
 }
 
+// @Summary Get information from a specific endpoint.
+// @Param sid path int true "Requested endpoint's sid"
+// @Produce json
+// @Success 200 {object} getEndpointResponse
+// @Failure 400
+// @Failure 500
+// @Tags endpoints
+// @Router /endpoints/{sid} [get]
+func (e *Endpoint) get(w http.ResponseWriter, r *http.Request) {
+	sid := chi.URLParam(r, "sid")
+	if sid == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	id, err := strconv.ParseInt(sid, 10, 32)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	tx, err := e.Begin(r.Context())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer tx.Rollback(r.Context())
+
+	queries := sqlc.New(tx)
+
+	row, err := queries.GetEndpointByID(r.Context(), int32(id))
+	if errors.Is(err, pgx.ErrNoRows) {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	} else if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		slog.Error("Failed to retrieve endpoint", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
+		return
+	}
+
+	endpoint := getEndpointResponse{
+		ID:          row.ID,
+		Transport:   row.Transport.String,
+		Context:     row.Context.String,
+		Codecs:      strings.Split(row.Allow.String, ","),
+		MaxContacts: row.MaxContacts.Int32,
+		Extension:   row.Extension.String,
+		DisplayName: displayNameFromClid(row.Callerid.String),
+	}
+	content, err := json.Marshal(endpoint)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		slog.Error("Failed to marshall response", slog.String("path", r.URL.Path))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(content)
+	if err != nil {
+		slog.Error("Failed to write response", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
+	}
+}
+
 // @Summary List existing endpoints.
 // @Param limit query int false "Limit the amount of endpoints returned" default(15)
 // @Produce json
-// @Success 200 {object} listEndpointsRequest
+// @Success 200 {object} listEndpointsResponse
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
@@ -107,13 +182,14 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 	for idx := range len(rows) {
 		row := rows[idx]
 		endpoints[idx] = listEndpointEntry{
+			Sid:         row.Sid,
 			ID:          row.ID,
 			Extension:   row.Extension.String,
 			Context:     row.Context.String,
 			DisplayName: displayNameFromClid(row.Callerid.String),
 		}
 	}
-	response := listEndpointsRequest{
+	response := listEndpointsResponse{
 		Endpoints: endpoints,
 	}
 	content, err := json.Marshal(response)

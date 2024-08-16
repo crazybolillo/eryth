@@ -68,9 +68,47 @@ func (q *Queries) GetEndpointByExtension(ctx context.Context, arg GetEndpointByE
 	return i, err
 }
 
+const getEndpointByID = `-- name: GetEndpointByID :one
+SELECT
+    pe.id, pe.callerid, pe.context, ee.extension, pe.transport, aor.max_contacts, pe.allow
+FROM
+    ps_endpoints pe
+INNER JOIN
+    ery_extension ee ON ee.endpoint_id = pe.sid
+INNER JOIN
+    ps_aors aor ON aor.id = pe.id
+WHERE
+    pe.sid = $1
+`
+
+type GetEndpointByIDRow struct {
+	ID          string      `json:"id"`
+	Callerid    pgtype.Text `json:"callerid"`
+	Context     pgtype.Text `json:"context"`
+	Extension   pgtype.Text `json:"extension"`
+	Transport   pgtype.Text `json:"transport"`
+	MaxContacts pgtype.Int4 `json:"max_contacts"`
+	Allow       pgtype.Text `json:"allow"`
+}
+
+func (q *Queries) GetEndpointByID(ctx context.Context, sid int32) (GetEndpointByIDRow, error) {
+	row := q.db.QueryRow(ctx, getEndpointByID, sid)
+	var i GetEndpointByIDRow
+	err := row.Scan(
+		&i.ID,
+		&i.Callerid,
+		&i.Context,
+		&i.Extension,
+		&i.Transport,
+		&i.MaxContacts,
+		&i.Allow,
+	)
+	return i, err
+}
+
 const listEndpoints = `-- name: ListEndpoints :many
 SELECT
-    pe.id, pe.callerid, pe.context, ee.extension
+    pe.sid, pe.id, pe.callerid, pe.context, ee.extension
 FROM
     ps_endpoints pe
 LEFT JOIN
@@ -80,6 +118,7 @@ LIMIT $1
 `
 
 type ListEndpointsRow struct {
+	Sid       int32       `json:"sid"`
 	ID        string      `json:"id"`
 	Callerid  pgtype.Text `json:"callerid"`
 	Context   pgtype.Text `json:"context"`
@@ -96,6 +135,7 @@ func (q *Queries) ListEndpoints(ctx context.Context, limit int32) ([]ListEndpoin
 	for rows.Next() {
 		var i ListEndpointsRow
 		if err := rows.Scan(
+			&i.Sid,
 			&i.ID,
 			&i.Callerid,
 			&i.Context,
