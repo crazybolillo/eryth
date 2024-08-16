@@ -34,7 +34,7 @@ FROM
 LEFT JOIN
     ery_extension ee
 ON ee.endpoint_id = pe.sid
-LIMIT $1;
+LIMIT $1 OFFSET $2;
 
 -- name: NewExtension :exec
 INSERT INTO ery_extension
@@ -65,3 +65,6 @@ INNER JOIN
     ps_aors aor ON aor.id = pe.id
 WHERE
     pe.sid = $1;
+
+-- name: CountEndpoints :one
+SELECT COUNT(*) FROM ps_endpoints;
