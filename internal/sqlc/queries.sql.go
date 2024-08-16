@@ -11,6 +11,17 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const countEndpoints = `-- name: CountEndpoints :one
+SELECT COUNT(*) FROM ps_endpoints
+`
+
+func (q *Queries) CountEndpoints(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, countEndpoints)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const deleteAOR = `-- name: DeleteAOR :exec
 DELETE FROM ps_aors WHERE id = $1
 `
@@ -114,8 +125,13 @@ FROM
 LEFT JOIN
     ery_extension ee
 ON ee.endpoint_id = pe.sid
-LIMIT $1
+LIMIT $1 OFFSET $2
 `
+
+type ListEndpointsParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
 
 type ListEndpointsRow struct {
 	Sid       int32       `json:"sid"`
@@ -125,8 +141,8 @@ type ListEndpointsRow struct {
 	Extension pgtype.Text `json:"extension"`
 }
 
-func (q *Queries) ListEndpoints(ctx context.Context, limit int32) ([]ListEndpointsRow, error) {
-	rows, err := q.db.Query(ctx, listEndpoints, limit)
+func (q *Queries) ListEndpoints(ctx context.Context, arg ListEndpointsParams) ([]ListEndpointsRow, error) {
+	rows, err := q.db.Query(ctx, listEndpoints, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

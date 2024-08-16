@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/crazybolillo/eryth/internal/db"
+	"github.com/crazybolillo/eryth/internal/query"
 	"github.com/crazybolillo/eryth/internal/sqlc"
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
@@ -41,6 +42,8 @@ type listEndpointEntry struct {
 }
 
 type listEndpointsResponse struct {
+	Total     int64               `json:"total"`
+	Retrieved int                 `json:"retrieved"`
 	Endpoints []listEndpointEntry `json:"endpoints"`
 }
 
@@ -148,7 +151,8 @@ func (e *Endpoint) get(w http.ResponseWriter, r *http.Request) {
 }
 
 // @Summary List existing endpoints.
-// @Param limit query int false "Limit the amount of endpoints returned" default(15)
+// @Param page query int false "Zero based page to fetch" default(0)
+// @Param pageSize query int false "Max amount of results to be returned" default(10)
 // @Produce json
 // @Success 200 {object} listEndpointsResponse
 // @Failure 400
@@ -156,19 +160,23 @@ func (e *Endpoint) get(w http.ResponseWriter, r *http.Request) {
 // @Tags endpoints
 // @Router /endpoints [get]
 func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
-	qlim := r.URL.Query().Get("limit")
-	limit := 15
-	if qlim != "" {
-		conv, err := strconv.Atoi(qlim)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		limit = conv
+	page, err := query.GetIntOr(r.URL.Query(), "page", 0)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	pageSize, err := query.GetIntOr(r.URL.Query(), "pageSize", 10)
+	if err != nil || page < 0 || pageSize < 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	queries := sqlc.New(e.Conn)
-	rows, err := queries.ListEndpoints(r.Context(), int32(limit))
+	rows, err := queries.ListEndpoints(r.Context(), sqlc.ListEndpointsParams{
+		Limit:  int32(pageSize),
+		Offset: int32(page * pageSize),
+	})
 	if err != nil {
 		slog.Error("Query execution failed", slog.String("path", r.URL.Path), slog.String("msg", err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)
@@ -176,6 +184,12 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 	}
 	if rows == nil {
 		rows = []sqlc.ListEndpointsRow{}
+	}
+	total, err := queries.CountEndpoints(r.Context())
+	if err != nil {
+		slog.Error("Query execution failed", slog.String("path", r.URL.Path), slog.String("msg", err.Error()))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	endpoints := make([]listEndpointEntry, len(rows))
@@ -190,6 +204,8 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	response := listEndpointsResponse{
+		Total:     total,
+		Retrieved: len(rows),
 		Endpoints: endpoints,
 	}
 	content, err := json.Marshal(response)

@@ -76,6 +76,10 @@ definitions:
         items:
           $ref: '#/definitions/handler.listEndpointEntry'
         type: array
+      retrieved:
+        type: integer
+      total:
+        type: integer
     type: object
 host: localhost:8080
 info:
@@ -113,10 +117,15 @@ paths:
   /endpoints:
     get:
       parameters:
-      - default: 15
-        description: Limit the amount of endpoints returned
+      - default: 0
+        description: Zero based page to fetch
         in: query
-        name: limit
+        name: page
+        type: integer
+      - default: 10
+        description: Max amount of results to be returned
+        in: query
+        name: pageSize
         type: integer
       produces:
       - application/json
