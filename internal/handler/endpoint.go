@@ -48,6 +48,7 @@ type listEndpointsResponse struct {
 }
 
 type getEndpointResponse struct {
+	Sid         int32    `json:"sid"`
 	ID          string   `json:"id"`
 	DisplayName string   `json:"displayName"`
 	Transport   string   `json:"transport"`
@@ -128,6 +129,7 @@ func (e *Endpoint) get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	endpoint := getEndpointResponse{
+		Sid:         int32(id),
 		ID:          row.ID,
 		Transport:   row.Transport.String,
 		Context:     row.Context.String,
@@ -225,7 +227,7 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 // @Summary Create a new endpoint.
 // @Accept json
 // @Param payload body createEndpointRequest true "Endpoint's information"
-// @Success 204
+// @Success 201 {object} getEndpointResponse
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
@@ -302,7 +304,47 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	// TODO: Duplicate code, same as when fetching endpoint. Probably should put this into a service layer.
+	tx, err = e.Begin(r.Context())
+	queries = sqlc.New(tx)
+	if err != nil {
+		slog.Error("Failed to create new transaction", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	res, err := queries.GetEndpointByID(r.Context(), sid)
+	if err != nil {
+		slog.Error(
+			"Failed to retrieve created endpoint",
+			slog.String("path", r.URL.Path), slog.String("reason", err.Error()), slog.Int("sid", int(sid)),
+		)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	endpoint := getEndpointResponse{
+		Sid:         sid,
+		ID:          res.ID,
+		Transport:   res.Transport.String,
+		Context:     res.Context.String,
+		Codecs:      strings.Split(res.Allow.String, ","),
+		MaxContacts: res.MaxContacts.Int32,
+		Extension:   res.Extension.String,
+		DisplayName: displayNameFromClid(res.Callerid.String),
+	}
+	content, err := json.Marshal(endpoint)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		slog.Error("Failed to marshall response", slog.String("path", r.URL.Path))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(content)
+	if err != nil {
+		slog.Error("Failed to write response", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
+	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // @Summary Delete an endpoint and its associated resources.
