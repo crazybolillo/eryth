@@ -63,7 +63,7 @@ func (e *Endpoint) Router() chi.Router {
 	r.Post("/", e.create)
 	r.Get("/", e.list)
 	r.Get("/{sid}", e.get)
-	r.Delete("/{id}", e.delete)
+	r.Delete("/{sid}", e.delete)
 
 	return r
 }
@@ -348,15 +348,16 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 }
 
 // @Summary Delete an endpoint and its associated resources.
-// @Param id path string true "ID of the endpoint to be deleted"
+// @Param sid path int true "Sid of the endpoint to be deleted"
 // @Success 204
 // @Failure 400
 // @Failure 500
 // @Tags endpoints
-// @Router /endpoints/{id} [delete]
+// @Router /endpoints/{sid} [delete]
 func (e *Endpoint) delete(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	if id == "" {
+	urlSid := chi.URLParam(r, "sid")
+	sid, err := strconv.Atoi(urlSid)
+	if err != nil || sid <= 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -370,7 +371,7 @@ func (e *Endpoint) delete(w http.ResponseWriter, r *http.Request) {
 
 	queries := sqlc.New(tx)
 
-	err = queries.DeleteEndpoint(r.Context(), id)
+	id, err := queries.DeleteEndpoint(r.Context(), int32(sid))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

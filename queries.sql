@@ -17,8 +17,8 @@ VALUES
     ($1, $2, $1, $1, $3, 'all', $4, $5)
 RETURNING sid;
 
--- name: DeleteEndpoint :exec
-DELETE FROM ps_endpoints WHERE id = $1;
+-- name: DeleteEndpoint :one
+DELETE FROM ps_endpoints WHERE sid = $1 RETURNING id;
 
 -- name: DeleteAOR :exec
 DELETE FROM ps_aors WHERE id = $1;

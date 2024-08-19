@@ -165,14 +165,14 @@ paths:
       summary: Create a new endpoint.
       tags:
       - endpoints
-  /endpoints/{id}:
+  /endpoints/{sid}:
     delete:
       parameters:
-      - description: ID of the endpoint to be deleted
+      - description: Sid of the endpoint to be deleted
         in: path
-        name: id
+        name: sid
         required: true
-        type: string
+        type: integer
       responses:
         "204":
           description: No Content
@@ -183,7 +183,6 @@ paths:
       summary: Delete an endpoint and its associated resources.
       tags:
       - endpoints
-  /endpoints/{sid}:
     get:
       parameters:
       - description: Requested endpoint's sid

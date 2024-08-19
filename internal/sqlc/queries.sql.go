@@ -40,13 +40,15 @@ func (q *Queries) DeleteAuth(ctx context.Context, id string) error {
 	return err
 }
 
-const deleteEndpoint = `-- name: DeleteEndpoint :exec
-DELETE FROM ps_endpoints WHERE id = $1
+const deleteEndpoint = `-- name: DeleteEndpoint :one
+DELETE FROM ps_endpoints WHERE sid = $1 RETURNING id
 `
 
-func (q *Queries) DeleteEndpoint(ctx context.Context, id string) error {
-	_, err := q.db.Exec(ctx, deleteEndpoint, id)
-	return err
+func (q *Queries) DeleteEndpoint(ctx context.Context, sid int32) (string, error) {
+	row := q.db.QueryRow(ctx, deleteEndpoint, sid)
+	var id string
+	err := row.Scan(&id)
+	return id, err
 }
 
 const getEndpointByExtension = `-- name: GetEndpointByExtension :one
