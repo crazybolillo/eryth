@@ -54,6 +54,8 @@ definitions:
         type: string
       maxContacts:
         type: integer
+      sid:
+        type: integer
       transport:
         type: string
     type: object
@@ -152,8 +154,10 @@ paths:
         schema:
           $ref: '#/definitions/handler.createEndpointRequest'
       responses:
-        "204":
-          description: No Content
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.getEndpointResponse'
         "400":
           description: Bad Request
         "500":
