@@ -33,8 +33,6 @@ definitions:
         type: integer
       password:
         type: string
-      realm:
-        type: string
       transport:
         type: string
     type: object
@@ -82,6 +80,25 @@ definitions:
         type: integer
       total:
         type: integer
+    type: object
+  handler.updateEndpointRequest:
+    properties:
+      codecs:
+        items:
+          type: string
+        type: array
+      context:
+        type: string
+      displayName:
+        type: string
+      extension:
+        type: string
+      maxContacts:
+        type: integer
+      password:
+        type: string
+      transport:
+        type: string
     type: object
 host: localhost:8080
 info:
@@ -202,6 +219,27 @@ paths:
         "500":
           description: Internal Server Error
       summary: Get information from a specific endpoint.
+      tags:
+      - endpoints
+    patch:
+      parameters:
+      - description: Sid of the endpoint to be updated
+        in: path
+        name: sid
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.updateEndpointRequest'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Update the specified endpoint. Omitted or null fields will remain unchanged.
       tags:
       - endpoints
 swagger: "2.0"
