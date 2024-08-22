@@ -68,3 +68,39 @@ WHERE
 
 -- name: CountEndpoints :one
 SELECT COUNT(*) FROM ps_endpoints;
+
+-- name: UpdateEndpointBySid :exec
+UPDATE
+    ps_endpoints
+SET
+    callerid = $1,
+    context = $2,
+    transport = $3,
+    allow = $4
+WHERE
+    sid = $5;
+
+-- name: UpdateExtensionByEndpointId :exec
+UPDATE
+    ery_extension
+SET
+    extension = $1
+WHERE
+    endpoint_id = $2;
+
+-- name: UpdateAORById :exec
+UPDATE
+    ps_aors
+SET
+    max_contacts = $1
+WHERE
+    id = $2;
+
+-- name: UpdateMD5AuthById :exec
+UPDATE
+    ps_auths
+SET
+    md5_cred = $1
+WHERE
+    id = $2;
+

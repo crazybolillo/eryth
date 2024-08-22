@@ -255,3 +255,91 @@ func (q *Queries) NewMD5Auth(ctx context.Context, arg NewMD5AuthParams) error {
 	)
 	return err
 }
+
+const updateAORById = `-- name: UpdateAORById :exec
+UPDATE
+    ps_aors
+SET
+    max_contacts = $1
+WHERE
+    id = $2
+`
+
+type UpdateAORByIdParams struct {
+	MaxContacts pgtype.Int4 `json:"max_contacts"`
+	ID          string      `json:"id"`
+}
+
+func (q *Queries) UpdateAORById(ctx context.Context, arg UpdateAORByIdParams) error {
+	_, err := q.db.Exec(ctx, updateAORById, arg.MaxContacts, arg.ID)
+	return err
+}
+
+const updateEndpointBySid = `-- name: UpdateEndpointBySid :exec
+UPDATE
+    ps_endpoints
+SET
+    callerid = $1,
+    context = $2,
+    transport = $3,
+    allow = $4
+WHERE
+    sid = $5
+`
+
+type UpdateEndpointBySidParams struct {
+	Callerid  pgtype.Text `json:"callerid"`
+	Context   pgtype.Text `json:"context"`
+	Transport pgtype.Text `json:"transport"`
+	Allow     pgtype.Text `json:"allow"`
+	Sid       int32       `json:"sid"`
+}
+
+func (q *Queries) UpdateEndpointBySid(ctx context.Context, arg UpdateEndpointBySidParams) error {
+	_, err := q.db.Exec(ctx, updateEndpointBySid,
+		arg.Callerid,
+		arg.Context,
+		arg.Transport,
+		arg.Allow,
+		arg.Sid,
+	)
+	return err
+}
+
+const updateExtensionByEndpointId = `-- name: UpdateExtensionByEndpointId :exec
+UPDATE
+    ery_extension
+SET
+    extension = $1
+WHERE
+    endpoint_id = $2
+`
+
+type UpdateExtensionByEndpointIdParams struct {
+	Extension  pgtype.Text `json:"extension"`
+	EndpointID int32       `json:"endpoint_id"`
+}
+
+func (q *Queries) UpdateExtensionByEndpointId(ctx context.Context, arg UpdateExtensionByEndpointIdParams) error {
+	_, err := q.db.Exec(ctx, updateExtensionByEndpointId, arg.Extension, arg.EndpointID)
+	return err
+}
+
+const updateMD5AuthById = `-- name: UpdateMD5AuthById :exec
+UPDATE
+    ps_auths
+SET
+    md5_cred = $1
+WHERE
+    id = $2
+`
+
+type UpdateMD5AuthByIdParams struct {
+	Md5Cred pgtype.Text `json:"md5_cred"`
+	ID      string      `json:"id"`
+}
+
+func (q *Queries) UpdateMD5AuthById(ctx context.Context, arg UpdateMD5AuthByIdParams) error {
+	_, err := q.db.Exec(ctx, updateMD5AuthById, arg.Md5Cred, arg.ID)
+	return err
+}
