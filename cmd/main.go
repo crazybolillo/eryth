@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/crazybolillo/eryth/internal/bouncer"
 	"github.com/crazybolillo/eryth/internal/handler"
+	"github.com/crazybolillo/eryth/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -73,7 +74,7 @@ func serve(ctx context.Context) error {
 	}))
 	r.Use(middleware.AllowContentEncoding("application/json"))
 
-	endpoint := handler.Endpoint{Conn: conn}
+	endpoint := handler.Endpoint{Service: &service.EndpointService{Cursor: conn}}
 	r.Mount("/endpoints", endpoint.Router())
 
 	checker := &bouncer.Bouncer{Conn: conn}

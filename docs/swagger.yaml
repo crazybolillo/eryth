@@ -15,7 +15,52 @@ definitions:
       extension:
         type: string
     type: object
-  handler.createEndpointRequest:
+  model.Endpoint:
+    properties:
+      codecs:
+        items:
+          type: string
+        type: array
+      context:
+        type: string
+      displayName:
+        type: string
+      extension:
+        type: string
+      id:
+        type: string
+      maxContacts:
+        type: integer
+      sid:
+        type: integer
+      transport:
+        type: string
+    type: object
+  model.EndpointPage:
+    properties:
+      endpoints:
+        items:
+          $ref: '#/definitions/model.EndpointPageEntry'
+        type: array
+      retrieved:
+        type: integer
+      total:
+        type: integer
+    type: object
+  model.EndpointPageEntry:
+    properties:
+      context:
+        type: string
+      displayName:
+        type: string
+      extension:
+        type: string
+      id:
+        type: string
+      sid:
+        type: integer
+    type: object
+  model.NewEndpoint:
     properties:
       codecs:
         items:
@@ -36,52 +81,7 @@ definitions:
       transport:
         type: string
     type: object
-  handler.getEndpointResponse:
-    properties:
-      codecs:
-        items:
-          type: string
-        type: array
-      context:
-        type: string
-      displayName:
-        type: string
-      extension:
-        type: string
-      id:
-        type: string
-      maxContacts:
-        type: integer
-      sid:
-        type: integer
-      transport:
-        type: string
-    type: object
-  handler.listEndpointEntry:
-    properties:
-      context:
-        type: string
-      displayName:
-        type: string
-      extension:
-        type: string
-      id:
-        type: string
-      sid:
-        type: integer
-    type: object
-  handler.listEndpointsResponse:
-    properties:
-      endpoints:
-        items:
-          $ref: '#/definitions/handler.listEndpointEntry'
-        type: array
-      retrieved:
-        type: integer
-      total:
-        type: integer
-    type: object
-  handler.updateEndpointRequest:
+  model.PatchedEndpoint:
     properties:
       codecs:
         items:
@@ -152,7 +152,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.listEndpointsResponse'
+            $ref: '#/definitions/model.EndpointPage'
         "400":
           description: Bad Request
         "500":
@@ -169,12 +169,12 @@ paths:
         name: payload
         required: true
         schema:
-          $ref: '#/definitions/handler.createEndpointRequest'
+          $ref: '#/definitions/model.NewEndpoint'
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/handler.getEndpointResponse'
+            $ref: '#/definitions/model.Endpoint'
         "400":
           description: Bad Request
         "500":
@@ -213,7 +213,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.getEndpointResponse'
+            $ref: '#/definitions/model.Endpoint'
         "400":
           description: Bad Request
         "500":
@@ -232,7 +232,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handler.updateEndpointRequest'
+            $ref: '#/definitions/model.PatchedEndpoint'
         "400":
           description: Bad Request
         "404":
