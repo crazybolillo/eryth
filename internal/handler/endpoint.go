@@ -112,7 +112,6 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		slog.Error("Failed to marshall endpoint list", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
 	}
-	w.WriteHeader(http.StatusOK)
 }
 
 // @Summary Create a new endpoint.
@@ -149,12 +148,13 @@ func (e *Endpoint) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
 	_, err = w.Write(content)
 	if err != nil {
 		slog.Error("Failed to write response", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
 	}
-	w.WriteHeader(http.StatusCreated)
+
 }
 
 // @Summary Delete an endpoint and its associated resources.
@@ -225,5 +225,4 @@ func (e *Endpoint) update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		slog.Error("Failed to write response", slog.String("path", r.URL.Path), slog.String("reason", err.Error()))
 	}
-	w.WriteHeader(http.StatusOK)
 }
