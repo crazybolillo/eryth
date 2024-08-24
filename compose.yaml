@@ -1,0 +1,17 @@
+name: eryth
+services:
+  db:
+    image: postgres:15-alpine
+    ports:
+      - '54321:5432'
+    environment:
+      - POSTGRES_USER=go
+      - POSTGRES_PASSWORD=go
+      - POSTGRES_DB=eryth
+    volumes:
+      - ./db/migrations/:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U go" ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
