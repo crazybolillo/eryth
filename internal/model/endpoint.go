@@ -3,6 +3,7 @@ package model
 type Endpoint struct {
 	Sid         int32    `json:"sid"`
 	ID          string   `json:"id"`
+	AccountCode string   `json:"accountCode"`
 	DisplayName string   `json:"displayName"`
 	Transport   string   `json:"transport"`
 	Context     string   `json:"context"`
@@ -13,6 +14,7 @@ type Endpoint struct {
 
 type NewEndpoint struct {
 	ID          string   `json:"id"`
+	AccountCode string   `json:"accountCode"`
 	Password    string   `json:"password"`
 	Transport   string   `json:"transport,omitempty"`
 	Context     string   `json:"context"`

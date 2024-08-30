@@ -12,9 +12,9 @@ VALUES
 
 -- name: NewEndpoint :one
 INSERT INTO ps_endpoints
-    (id, transport, aors, auth, context, disallow, allow, callerid)
+    (id, transport, aors, auth, context, disallow, allow, callerid, accountcode)
 VALUES
-    ($1, $2, $1, $1, $3, 'all', $4, $5)
+    ($1, $2, $1, $1, $3, 'all', $4, $5, $6)
 RETURNING sid;
 
 -- name: DeleteEndpoint :one
@@ -56,7 +56,7 @@ WHERE
 
 -- name: GetEndpointByID :one
 SELECT
-    pe.id, pe.callerid, pe.context, ee.extension, pe.transport, aor.max_contacts, pe.allow
+    pe.id, pe.accountcode, pe.callerid, pe.context, ee.extension, pe.transport, aor.max_contacts, pe.allow
 FROM
     ps_endpoints pe
 INNER JOIN

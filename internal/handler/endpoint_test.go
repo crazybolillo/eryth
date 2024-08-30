@@ -119,6 +119,7 @@ func MustCreate(handler http.Handler) func(*testing.T) {
 
 		want := model.Endpoint{
 			Sid:         got.Sid,
+			AccountCode: "zinniaelegans",
 			ID:          endpoint.ID,
 			DisplayName: endpoint.DisplayName,
 			Transport:   endpoint.Transport,

@@ -17,6 +17,8 @@ definitions:
     type: object
   model.Endpoint:
     properties:
+      accountCode:
+        type: string
       codecs:
         items:
           type: string
@@ -62,6 +64,8 @@ definitions:
     type: object
   model.NewEndpoint:
     properties:
+      accountCode:
+        type: string
       codecs:
         items:
           type: string
