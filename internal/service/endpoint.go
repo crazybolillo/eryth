@@ -1,6 +1,7 @@
 package service
 
 import (
+	"cmp"
 	"context"
 	"crypto/md5"
 	"encoding/hex"
@@ -62,11 +63,12 @@ func (e *EndpointService) Create(ctx context.Context, payload model.NewEndpoint)
 	}
 
 	sid, err := queries.NewEndpoint(ctx, sqlc.NewEndpointParams{
-		ID:        payload.ID,
-		Transport: db.Text(payload.Transport),
-		Context:   db.Text(payload.Context),
-		Allow:     db.Text(strings.Join(payload.Codecs, ",")),
-		Callerid:  db.Text(fmt.Sprintf(`"%s" <%s>`, payload.DisplayName, payload.ID)),
+		ID:          payload.ID,
+		Accountcode: db.Text(cmp.Or(payload.AccountCode, payload.ID)),
+		Transport:   db.Text(payload.Transport),
+		Context:     db.Text(payload.Context),
+		Allow:       db.Text(strings.Join(payload.Codecs, ",")),
+		Callerid:    db.Text(fmt.Sprintf(`"%s" <%s>`, payload.DisplayName, payload.ID)),
 	})
 	if err != nil {
 		return model.Endpoint{}, err
@@ -108,6 +110,7 @@ func (e *EndpointService) Read(ctx context.Context, sid int32) (model.Endpoint, 
 	endpoint := model.Endpoint{
 		Sid:         sid,
 		ID:          row.ID,
+		AccountCode: row.Accountcode.String,
 		DisplayName: displayNameFromClid(row.Callerid.String),
 		Transport:   row.Transport.String,
 		Context:     row.Context.String,
