@@ -57,7 +57,7 @@ func serve(ctx context.Context) error {
 
 	conn, err := pgx.Connect(ctx, os.Getenv("DATABASE_URL"))
 	if err != nil {
-		slog.Error("failed to establish database connection")
+		slog.Error("failed to establish database connection", slog.String("reason", err.Error()))
 		return err
 	}
 	defer conn.Close(ctx)
