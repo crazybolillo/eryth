@@ -16,22 +16,22 @@ type NewEndpoint struct {
 	ID          string   `json:"id"`
 	AccountCode string   `json:"accountCode"`
 	Password    string   `json:"password"`
-	Transport   string   `json:"transport,omitempty"`
+	Transport   string   `json:"transport"`
 	Context     string   `json:"context"`
 	Codecs      []string `json:"codecs"`
-	MaxContacts int32    `json:"maxContacts,omitempty"`
-	Extension   string   `json:"extension,omitempty"`
+	MaxContacts int32    `json:"maxContacts"`
+	Extension   string   `json:"extension"`
 	DisplayName string   `json:"displayName"`
 }
 
 type PatchedEndpoint struct {
-	Password    *string  `json:"password,omitempty"`
-	DisplayName *string  `json:"displayName,omitempty"`
-	Transport   *string  `json:"transport,omitempty"`
-	Context     *string  `json:"context,omitempty"`
-	Codecs      []string `json:"codecs,omitempty"`
-	MaxContacts *int32   `json:"maxContacts,omitempty"`
-	Extension   *string  `json:"extension,omitempty"`
+	Password    *string  `json:"password,"`
+	DisplayName *string  `json:"displayName,"`
+	Transport   *string  `json:"transport,"`
+	Context     *string  `json:"context,"`
+	Codecs      []string `json:"codecs,"`
+	MaxContacts *int32   `json:"maxContacts,"`
+	Extension   *string  `json:"extension,"`
 }
 
 type EndpointPageEntry struct {
