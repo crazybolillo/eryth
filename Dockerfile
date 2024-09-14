@@ -1,4 +1,4 @@
-FROM golang:1.22
+FROM golang:1.22-alpine
 
 WORKDIR /app
 
@@ -10,5 +10,7 @@ RUN go build -o /bin/eryth ./cmd
 FROM scratch
 
 COPY --from=0 /bin/eryth /bin/eryth
+
+EXPOSE 8080
 
 ENTRYPOINT ["eryth"]
