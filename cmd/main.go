@@ -81,8 +81,13 @@ func serve(ctx context.Context) error {
 	authorization := handler.Authorization{Bouncer: checker}
 	r.Mount("/bouncer", authorization.Router())
 
-	slog.Info("Listening on :8080")
-	err = http.ListenAndServe(":8080", r)
+	listen := os.Getenv("LISTEN_ADDR")
+	if listen == "" {
+		listen = ":8080"
+	}
+
+	slog.Info("Starting server", slog.String("addr", listen))
+	err = http.ListenAndServe(listen, r)
 	if err != nil {
 		slog.Error("Failed to start server", "reason", err.Error())
 	}
