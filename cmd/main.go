@@ -8,14 +8,12 @@ import (
 	"github.com/crazybolillo/eryth/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/cors"
 	"github.com/go-chi/httplog/v2"
 	"github.com/jackc/pgx/v5"
 	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
-	"strings"
 )
 
 // @title Asterisk Administration API
@@ -68,10 +66,6 @@ func serve(ctx context.Context) error {
 		LogLevel:        slog.LevelInfo,
 		Concise:         true,
 	})))
-	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins: strings.Split(os.Getenv("CORS_ALLOWED_ORIGINS"), ","),
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-	}))
 	r.Use(middleware.AllowContentEncoding("application/json"))
 
 	endpoint := handler.Endpoint{Service: &service.EndpointService{Cursor: conn}}
