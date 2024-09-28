@@ -20,8 +20,7 @@ type Bouncer struct {
 
 func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) Response {
 	result := Response{
-		Allow:       false,
-		Destination: "",
+		Allow: false,
 	}
 
 	tx, err := b.Begin(ctx)
@@ -36,7 +35,12 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) Response {
 		Extension: db.Text(dialed),
 	})
 	if err != nil {
-		slog.Error("Failed to retrieve endpoint", slog.String("dialed", dialed), slog.String("reason", err.Error()))
+		slog.Error(
+			"Failed to retrieve call target",
+			slog.String("from", endpoint),
+			slog.String("dialed", dialed),
+			slog.String("reason", err.Error()),
+		)
 		return result
 	}
 
