@@ -1,5 +1,13 @@
 name: eryth
 services:
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+      - '4000:8080'
+    environment:
+      - API_URL=/doc/swagger.yaml
+    volumes:
+      - ./docs:/usr/share/nginx/html/doc
   db:
     image: postgres:15-alpine
     ports:
