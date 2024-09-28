@@ -232,6 +232,12 @@ paths:
         name: sid
         required: true
         type: integer
+      - description: Endpoint's fields to update
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.PatchedEndpoint'
       responses:
         "200":
           description: OK

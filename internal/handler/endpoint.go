@@ -183,6 +183,7 @@ func (e *Endpoint) delete(w http.ResponseWriter, r *http.Request) {
 
 // @Summary Update the specified endpoint. Omitted or null fields will remain unchanged.
 // @Param sid path int true "Sid of the endpoint to be updated"
+// @Param payload body model.PatchedEndpoint true "Endpoint's fields to update"
 // @Success 200 {object} model.PatchedEndpoint
 // @Failure 400
 // @Failure 404
