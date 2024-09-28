@@ -1,25 +1,19 @@
-package bouncer
+package service
 
 import (
 	"context"
 	"github.com/crazybolillo/eryth/internal/db"
+	"github.com/crazybolillo/eryth/internal/model"
 	"github.com/crazybolillo/eryth/internal/sqlc"
-	"github.com/jackc/pgx/v5"
 	"log/slog"
 )
 
-type Response struct {
-	Allow       bool   `json:"allow"`
-	Destination string `json:"destination"`
-	CallerID    string `json:"callerid"`
-}
-
 type Bouncer struct {
-	*pgx.Conn
+	Cursor
 }
 
-func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) Response {
-	result := Response{
+func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) model.BouncerResponse {
+	result := model.BouncerResponse{
 		Allow: false,
 	}
 
@@ -44,7 +38,7 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) Response {
 		return result
 	}
 
-	return Response{
+	return model.BouncerResponse{
 		Allow:       true,
 		Destination: row.ID,
 		CallerID:    row.Callerid.String,

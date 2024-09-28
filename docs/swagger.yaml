@@ -1,18 +1,18 @@
 definitions:
-  bouncer.Response:
+  handler.AuthorizationRequest:
+    properties:
+      endpoint:
+        type: string
+      extension:
+        type: string
+    type: object
+  model.BouncerResponse:
     properties:
       allow:
         type: boolean
       callerid:
         type: string
       destination:
-        type: string
-    type: object
-  handler.AuthorizationRequest:
-    properties:
-      endpoint:
-        type: string
-      extension:
         type: string
     type: object
   model.Endpoint:
@@ -128,7 +128,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/bouncer.Response'
+            $ref: '#/definitions/model.BouncerResponse'
         "400":
           description: Bad Request
         "500":
