@@ -3,14 +3,14 @@ package handler
 import (
 	"context"
 	"encoding/json"
-	"github.com/crazybolillo/eryth/internal/bouncer"
+	"github.com/crazybolillo/eryth/internal/model"
 	"github.com/go-chi/chi/v5"
 	"log/slog"
 	"net/http"
 )
 
 type CallBouncer interface {
-	Check(ctx context.Context, endpoint, dialed string) bouncer.Response
+	Check(ctx context.Context, endpoint, dialed string) model.BouncerResponse
 }
 
 type Authorization struct {
@@ -34,7 +34,7 @@ func (e *Authorization) Router() chi.Router {
 // @Accept json
 // @Produce json
 // @Param payload body AuthorizationRequest true "Action to be reviewed"
-// @Success 200 {object} bouncer.Response
+// @Success 200 {object} model.BouncerResponse
 // @Failure 400
 // @Failure 500
 // @Tags bouncer

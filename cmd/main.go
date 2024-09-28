@@ -3,13 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/crazybolillo/eryth/internal/bouncer"
 	"github.com/crazybolillo/eryth/internal/handler"
 	"github.com/crazybolillo/eryth/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v2"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"log/slog"
 	"net/http"
 	"net/url"
@@ -53,12 +52,12 @@ func serve(ctx context.Context) error {
 		slog.String("database", u.Path[1:]),
 	)
 
-	conn, err := pgx.Connect(ctx, os.Getenv("DATABASE_URL"))
+	pool, err := pgxpool.New(ctx, os.Getenv("DATABASE_URL"))
 	if err != nil {
 		slog.Error("failed to establish database connection", slog.String("reason", err.Error()))
 		return err
 	}
-	defer conn.Close(ctx)
+	defer pool.Close()
 
 	r := chi.NewRouter()
 	r.Use(httplog.RequestLogger(httplog.NewLogger("eryth", httplog.Options{
@@ -68,10 +67,10 @@ func serve(ctx context.Context) error {
 	})))
 	r.Use(middleware.AllowContentEncoding("application/json"))
 
-	endpoint := handler.Endpoint{Service: &service.EndpointService{Cursor: conn}}
+	endpoint := handler.Endpoint{Service: &service.EndpointService{Cursor: pool}}
 	r.Mount("/endpoints", endpoint.Router())
 
-	checker := &bouncer.Bouncer{Conn: conn}
+	checker := &service.Bouncer{Cursor: pool}
 	authorization := handler.Authorization{Bouncer: checker}
 	r.Mount("/bouncer", authorization.Router())
 
