@@ -10,6 +10,8 @@ type Endpoint struct {
 	Codecs      []string `json:"codecs"`
 	MaxContacts int32    `json:"maxContacts"`
 	Extension   string   `json:"extension"`
+	Nat         bool     `json:"nat"`
+	Encryption  string   `json:"encryption"`
 }
 
 type NewEndpoint struct {
@@ -22,6 +24,8 @@ type NewEndpoint struct {
 	MaxContacts int32    `json:"maxContacts"`
 	Extension   string   `json:"extension"`
 	DisplayName string   `json:"displayName"`
+	Nat         bool     `json:"nat"`
+	Encryption  string   `json:"encryption"`
 }
 
 type PatchedEndpoint struct {
@@ -32,6 +36,8 @@ type PatchedEndpoint struct {
 	Codecs      []string `json:"codecs,"`
 	MaxContacts *int32   `json:"maxContacts,"`
 	Extension   *string  `json:"extension,"`
+	Nat         *bool    `json:"nat,"`
+	Encryption  *string  `json:"encryption,"`
 }
 
 type EndpointPageEntry struct {

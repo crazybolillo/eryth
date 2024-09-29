@@ -12,9 +12,23 @@ VALUES
 
 -- name: NewEndpoint :one
 INSERT INTO ps_endpoints
-    (id, transport, aors, auth, context, disallow, allow, callerid, accountcode)
+    (
+         id,
+         transport,
+         aors,
+         auth,
+         context,
+         disallow,
+         allow,
+         callerid,
+         accountcode,
+         force_rport,
+         rewrite_contact,
+         rtp_symmetric,
+         media_encryption
+    )
 VALUES
-    ($1, $2, $1, $1, $3, 'all', $4, $5, $6)
+    ($1, $2, $1, $1, $3, 'all', $4, $5, $6, @nat, @nat, @nat, $7)
 RETURNING sid;
 
 -- name: DeleteEndpoint :one
@@ -56,7 +70,16 @@ WHERE
 
 -- name: GetEndpointByID :one
 SELECT
-    pe.id, pe.accountcode, pe.callerid, pe.context, ee.extension, pe.transport, aor.max_contacts, pe.allow
+    pe.id,
+    pe.accountcode,
+    pe.callerid,
+    pe.context,
+    ee.extension,
+    pe.transport,
+    aor.max_contacts,
+    pe.allow,
+    (pe.force_rport::text::boolean AND pe.rewrite_contact::text::boolean AND pe.rtp_symmetric::text::boolean) AS nat,
+    pe.media_encryption
 FROM
     ps_endpoints pe
 INNER JOIN
@@ -76,9 +99,13 @@ SET
     callerid = $1,
     context = $2,
     transport = $3,
-    allow = $4
+    allow = $4,
+    force_rport = @nat,
+    rewrite_contact = @nat,
+    rtp_symmetric = @nat,
+    media_encryption = $5
 WHERE
-    sid = $5;
+    sid = $6;
 
 -- name: UpdateExtensionByEndpointId :exec
 UPDATE

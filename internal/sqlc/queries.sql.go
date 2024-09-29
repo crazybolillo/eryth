@@ -83,7 +83,16 @@ func (q *Queries) GetEndpointByExtension(ctx context.Context, arg GetEndpointByE
 
 const getEndpointByID = `-- name: GetEndpointByID :one
 SELECT
-    pe.id, pe.accountcode, pe.callerid, pe.context, ee.extension, pe.transport, aor.max_contacts, pe.allow
+    pe.id,
+    pe.accountcode,
+    pe.callerid,
+    pe.context,
+    ee.extension,
+    pe.transport,
+    aor.max_contacts,
+    pe.allow,
+    (pe.force_rport::text::boolean AND pe.rewrite_contact::text::boolean AND pe.rtp_symmetric::text::boolean) AS nat,
+    pe.media_encryption
 FROM
     ps_endpoints pe
 INNER JOIN
@@ -95,14 +104,16 @@ WHERE
 `
 
 type GetEndpointByIDRow struct {
-	ID          string      `json:"id"`
-	Accountcode pgtype.Text `json:"accountcode"`
-	Callerid    pgtype.Text `json:"callerid"`
-	Context     pgtype.Text `json:"context"`
-	Extension   pgtype.Text `json:"extension"`
-	Transport   pgtype.Text `json:"transport"`
-	MaxContacts pgtype.Int4 `json:"max_contacts"`
-	Allow       pgtype.Text `json:"allow"`
+	ID              string                         `json:"id"`
+	Accountcode     pgtype.Text                    `json:"accountcode"`
+	Callerid        pgtype.Text                    `json:"callerid"`
+	Context         pgtype.Text                    `json:"context"`
+	Extension       pgtype.Text                    `json:"extension"`
+	Transport       pgtype.Text                    `json:"transport"`
+	MaxContacts     pgtype.Int4                    `json:"max_contacts"`
+	Allow           pgtype.Text                    `json:"allow"`
+	Nat             pgtype.Bool                    `json:"nat"`
+	MediaEncryption NullPjsipMediaEncryptionValues `json:"media_encryption"`
 }
 
 func (q *Queries) GetEndpointByID(ctx context.Context, sid int32) (GetEndpointByIDRow, error) {
@@ -117,6 +128,8 @@ func (q *Queries) GetEndpointByID(ctx context.Context, sid int32) (GetEndpointBy
 		&i.Transport,
 		&i.MaxContacts,
 		&i.Allow,
+		&i.Nat,
+		&i.MediaEncryption,
 	)
 	return i, err
 }
@@ -190,19 +203,35 @@ func (q *Queries) NewAOR(ctx context.Context, arg NewAORParams) error {
 
 const newEndpoint = `-- name: NewEndpoint :one
 INSERT INTO ps_endpoints
-    (id, transport, aors, auth, context, disallow, allow, callerid, accountcode)
+    (
+         id,
+         transport,
+         aors,
+         auth,
+         context,
+         disallow,
+         allow,
+         callerid,
+         accountcode,
+         force_rport,
+         rewrite_contact,
+         rtp_symmetric,
+         media_encryption
+    )
 VALUES
-    ($1, $2, $1, $1, $3, 'all', $4, $5, $6)
+    ($1, $2, $1, $1, $3, 'all', $4, $5, $6, $8, $8, $8, $7)
 RETURNING sid
 `
 
 type NewEndpointParams struct {
-	ID          string      `json:"id"`
-	Transport   pgtype.Text `json:"transport"`
-	Context     pgtype.Text `json:"context"`
-	Allow       pgtype.Text `json:"allow"`
-	Callerid    pgtype.Text `json:"callerid"`
-	Accountcode pgtype.Text `json:"accountcode"`
+	ID              string                         `json:"id"`
+	Transport       pgtype.Text                    `json:"transport"`
+	Context         pgtype.Text                    `json:"context"`
+	Allow           pgtype.Text                    `json:"allow"`
+	Callerid        pgtype.Text                    `json:"callerid"`
+	Accountcode     pgtype.Text                    `json:"accountcode"`
+	MediaEncryption NullPjsipMediaEncryptionValues `json:"media_encryption"`
+	Nat             NullAstBoolValues              `json:"nat"`
 }
 
 func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) (int32, error) {
@@ -213,6 +242,8 @@ func (q *Queries) NewEndpoint(ctx context.Context, arg NewEndpointParams) (int32
 		arg.Allow,
 		arg.Callerid,
 		arg.Accountcode,
+		arg.MediaEncryption,
+		arg.Nat,
 	)
 	var sid int32
 	err := row.Scan(&sid)
@@ -286,17 +317,23 @@ SET
     callerid = $1,
     context = $2,
     transport = $3,
-    allow = $4
+    allow = $4,
+    force_rport = $7,
+    rewrite_contact = $7,
+    rtp_symmetric = $7,
+    media_encryption = $5
 WHERE
-    sid = $5
+    sid = $6
 `
 
 type UpdateEndpointBySidParams struct {
-	Callerid  pgtype.Text `json:"callerid"`
-	Context   pgtype.Text `json:"context"`
-	Transport pgtype.Text `json:"transport"`
-	Allow     pgtype.Text `json:"allow"`
-	Sid       int32       `json:"sid"`
+	Callerid        pgtype.Text                    `json:"callerid"`
+	Context         pgtype.Text                    `json:"context"`
+	Transport       pgtype.Text                    `json:"transport"`
+	Allow           pgtype.Text                    `json:"allow"`
+	MediaEncryption NullPjsipMediaEncryptionValues `json:"media_encryption"`
+	Sid             int32                          `json:"sid"`
+	Nat             NullAstBoolValues              `json:"nat"`
 }
 
 func (q *Queries) UpdateEndpointBySid(ctx context.Context, arg UpdateEndpointBySidParams) error {
@@ -305,7 +342,9 @@ func (q *Queries) UpdateEndpointBySid(ctx context.Context, arg UpdateEndpointByS
 		arg.Context,
 		arg.Transport,
 		arg.Allow,
+		arg.MediaEncryption,
 		arg.Sid,
+		arg.Nat,
 	)
 	return err
 }

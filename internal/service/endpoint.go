@@ -44,6 +44,22 @@ func displayNameFromClid(callerID string) string {
 	return callerID[1:end]
 }
 
+func parseMediaEncryption(value string) (sqlc.NullPjsipMediaEncryptionValues, error) {
+	switch value {
+	case "sdes":
+		fallthrough
+	case "dtls":
+		return sqlc.NullPjsipMediaEncryptionValues{
+			PjsipMediaEncryptionValues: sqlc.PjsipMediaEncryptionValues(value),
+			Valid:                      true,
+		}, nil
+	case "":
+		return sqlc.NullPjsipMediaEncryptionValues{}, nil
+	default:
+		return sqlc.NullPjsipMediaEncryptionValues{}, fmt.Errorf("invalid value for media_encryption '%s'", value)
+	}
+}
+
 func (e *EndpointService) Create(ctx context.Context, payload model.NewEndpoint) (model.Endpoint, error) {
 	tx, err := e.Begin(ctx)
 	if err != nil {
@@ -62,13 +78,25 @@ func (e *EndpointService) Create(ctx context.Context, payload model.NewEndpoint)
 		return model.Endpoint{}, err
 	}
 
+	natValue := sqlc.NullAstBoolValues{AstBoolValues: "no", Valid: true}
+	if payload.Nat {
+		natValue.AstBoolValues = "yes"
+	}
+
+	mediaValue, err := parseMediaEncryption(payload.Encryption)
+	if err != nil {
+		return model.Endpoint{}, err
+	}
+
 	sid, err := queries.NewEndpoint(ctx, sqlc.NewEndpointParams{
-		ID:          payload.ID,
-		Accountcode: db.Text(cmp.Or(payload.AccountCode, payload.ID)),
-		Transport:   db.Text(payload.Transport),
-		Context:     db.Text(payload.Context),
-		Allow:       db.Text(strings.Join(payload.Codecs, ",")),
-		Callerid:    db.Text(fmt.Sprintf(`"%s" <%s>`, payload.DisplayName, payload.ID)),
+		ID:              payload.ID,
+		Accountcode:     db.Text(cmp.Or(payload.AccountCode, payload.ID)),
+		Transport:       db.Text(payload.Transport),
+		Context:         db.Text(payload.Context),
+		Allow:           db.Text(strings.Join(payload.Codecs, ",")),
+		Callerid:        db.Text(fmt.Sprintf(`"%s" <%s>`, payload.DisplayName, payload.ID)),
+		Nat:             natValue,
+		MediaEncryption: mediaValue,
 	})
 	if err != nil {
 		return model.Endpoint{}, err
@@ -117,6 +145,8 @@ func (e *EndpointService) Read(ctx context.Context, sid int32) (model.Endpoint, 
 		Codecs:      strings.Split(row.Allow.String, ","),
 		MaxContacts: row.MaxContacts.Int32,
 		Extension:   row.Extension.String,
+		Nat:         row.Nat.Bool,
+		Encryption:  string(row.MediaEncryption.PjsipMediaEncryptionValues),
 	}
 	return endpoint, nil
 }
@@ -159,6 +189,20 @@ func (e *EndpointService) Update(ctx context.Context, sid int32, payload model.P
 	} else {
 		patchedEndpoint.Allow = endpoint.Allow
 	}
+	if payload.Nat != nil {
+		patchedEndpoint.Nat = sqlc.NullAstBoolValues{AstBoolValues: "yes", Valid: *payload.Nat}
+	} else {
+		patchedEndpoint.Nat = sqlc.NullAstBoolValues{AstBoolValues: "yes", Valid: endpoint.Nat.Bool}
+	}
+	if payload.Encryption != nil {
+		patchedEndpoint.MediaEncryption, err = parseMediaEncryption(*payload.Encryption)
+		if err != nil {
+			return model.Endpoint{}, err
+		}
+	} else {
+		patchedEndpoint.MediaEncryption = endpoint.MediaEncryption
+	}
+
 	err = queries.UpdateEndpointBySid(ctx, patchedEndpoint)
 	if err != nil {
 		return model.Endpoint{}, err

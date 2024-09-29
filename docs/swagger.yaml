@@ -27,12 +27,16 @@ definitions:
         type: string
       displayName:
         type: string
+      encryption:
+        type: string
       extension:
         type: string
       id:
         type: string
       maxContacts:
         type: integer
+      nat:
+        type: boolean
       sid:
         type: integer
       transport:
@@ -74,12 +78,16 @@ definitions:
         type: string
       displayName:
         type: string
+      encryption:
+        type: string
       extension:
         type: string
       id:
         type: string
       maxContacts:
         type: integer
+      nat:
+        type: boolean
       password:
         type: string
       transport:
@@ -95,10 +103,14 @@ definitions:
         type: string
       displayName:
         type: string
+      encryption:
+        type: string
       extension:
         type: string
       maxContacts:
         type: integer
+      nat:
+        type: boolean
       password:
         type: string
       transport:
