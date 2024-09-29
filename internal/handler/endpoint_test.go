@@ -110,6 +110,7 @@ func MustCreate(handler http.Handler) func(*testing.T) {
 			Extension:   "1234",
 			DisplayName: "Zinnia Elegans",
 			MaxContacts: 10,
+			Nat:         true,
 		}
 		res := createEndpoint(t, handler, endpoint)
 		if res.Code != http.StatusCreated {
@@ -127,6 +128,7 @@ func MustCreate(handler http.Handler) func(*testing.T) {
 			Codecs:      endpoint.Codecs,
 			MaxContacts: 10,
 			Extension:   "1234",
+			Nat:         true,
 		}
 
 		if !reflect.DeepEqual(got, want) {
@@ -198,15 +200,21 @@ func MustUpdate(handler http.Handler) func(*testing.T) {
 			Codecs:      []string{"ulaw", "opus"},
 			Extension:   "5061",
 			DisplayName: "Big Chungus",
+			Nat:         false,
+			Encryption:  "dtls",
 		}
 		res := createEndpoint(t, handler, endpoint)
 		want := parseEndpoint(t, res.Body)
 		want.MaxContacts = 5
 		want.Extension = "6072"
+		want.Nat = true
+		want.Encryption = "sdes"
 
 		res = updateEndpoint(t, handler, want.Sid, model.PatchedEndpoint{
 			MaxContacts: &want.MaxContacts,
 			Extension:   &want.Extension,
+			Nat:         &want.Nat,
+			Encryption:  &want.Encryption,
 		})
 		if res.Code != http.StatusOK {
 			t.Errorf("invalid http code, got %d, want %d", res.Code, http.StatusOK)
