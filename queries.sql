@@ -131,3 +131,22 @@ SET
 WHERE
     id = $2;
 
+-- name: ListContacts :many
+SELECT
+    pe.id, pe.callerid, ee.extension
+FROM
+    ps_endpoints pe
+INNER JOIN
+    ery_extension ee ON ee.endpoint_id = pe.sid
+LIMIT
+    $1
+OFFSET
+    $2;
+
+-- name: CountContacts :one
+SELECT
+    COUNT(*)
+FROM
+    ps_endpoints pe
+INNER JOIN
+    ery_extension ee ON ee.endpoint_id = pe.sid;

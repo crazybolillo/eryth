@@ -11,6 +11,22 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const countContacts = `-- name: CountContacts :one
+SELECT
+    COUNT(*)
+FROM
+    ps_endpoints pe
+INNER JOIN
+    ery_extension ee ON ee.endpoint_id = pe.sid
+`
+
+func (q *Queries) CountContacts(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, countContacts)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const countEndpoints = `-- name: CountEndpoints :one
 SELECT COUNT(*) FROM ps_endpoints
 `
@@ -132,6 +148,50 @@ func (q *Queries) GetEndpointByID(ctx context.Context, sid int32) (GetEndpointBy
 		&i.MediaEncryption,
 	)
 	return i, err
+}
+
+const listContacts = `-- name: ListContacts :many
+SELECT
+    pe.id, pe.callerid, ee.extension
+FROM
+    ps_endpoints pe
+INNER JOIN
+    ery_extension ee ON ee.endpoint_id = pe.sid
+LIMIT
+    $1
+OFFSET
+    $2
+`
+
+type ListContactsParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+type ListContactsRow struct {
+	ID        string      `json:"id"`
+	Callerid  pgtype.Text `json:"callerid"`
+	Extension pgtype.Text `json:"extension"`
+}
+
+func (q *Queries) ListContacts(ctx context.Context, arg ListContactsParams) ([]ListContactsRow, error) {
+	rows, err := q.db.Query(ctx, listContacts, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListContactsRow
+	for rows.Next() {
+		var i ListContactsRow
+		if err := rows.Scan(&i.ID, &i.Callerid, &i.Extension); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listEndpoints = `-- name: ListEndpoints :many
