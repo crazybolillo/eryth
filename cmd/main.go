@@ -70,9 +70,11 @@ func serve(ctx context.Context) error {
 	endpoint := handler.Endpoint{Service: &service.EndpointService{Cursor: pool}}
 	r.Mount("/endpoints", endpoint.Router())
 
-	checker := &service.Bouncer{Cursor: pool}
-	authorization := handler.Authorization{Bouncer: checker}
+	authorization := handler.Authorization{Bouncer: &service.Bouncer{Cursor: pool}}
 	r.Mount("/bouncer", authorization.Router())
+
+	phonebook := handler.Contact{Service: &service.Contact{Cursor: pool}}
+	r.Mount("/contacts", phonebook.Router())
 
 	listen := os.Getenv("LISTEN_ADDR")
 	if listen == "" {
