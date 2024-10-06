@@ -7,8 +7,8 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/crazybolillo/eryth/internal/db"
-	"github.com/crazybolillo/eryth/internal/model"
 	"github.com/crazybolillo/eryth/internal/sqlc"
+	"github.com/crazybolillo/eryth/pkg/model"
 	"strings"
 )
 

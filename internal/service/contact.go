@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/crazybolillo/eryth/internal/model"
 	"github.com/crazybolillo/eryth/internal/sqlc"
+	"github.com/crazybolillo/eryth/pkg/model"
 	"github.com/jackc/pgx/v5"
 )
 
