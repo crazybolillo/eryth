@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 	"encoding/json"
-	"github.com/crazybolillo/eryth/internal/model"
+	"github.com/crazybolillo/eryth/pkg/model"
 	"github.com/go-chi/chi/v5"
 	"log/slog"
 	"net/http"

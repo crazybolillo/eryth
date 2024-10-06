@@ -3,9 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"errors"
-	"github.com/crazybolillo/eryth/internal/model"
 	"github.com/crazybolillo/eryth/internal/query"
 	"github.com/crazybolillo/eryth/internal/service"
+	"github.com/crazybolillo/eryth/pkg/model"
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 	"log/slog"
