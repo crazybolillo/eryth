@@ -17,13 +17,7 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) model.Boun
 		Allow: false,
 	}
 
-	tx, err := b.Begin(ctx)
-	if err != nil {
-		slog.Error("Unable to start transaction", slog.String("reason", err.Error()))
-		return result
-	}
-
-	queries := sqlc.New(tx)
+	queries := sqlc.New(b.Cursor)
 	row, err := queries.GetEndpointByExtension(ctx, sqlc.GetEndpointByExtensionParams{
 		ID:        endpoint,
 		Extension: db.Text(dialed),
