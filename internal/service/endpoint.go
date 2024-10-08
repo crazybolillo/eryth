@@ -156,6 +156,7 @@ func (e *EndpointService) Update(ctx context.Context, sid int32, payload model.P
 	if err != nil {
 		return model.Endpoint{}, err
 	}
+	defer tx.Rollback(ctx)
 
 	queries := sqlc.New(tx)
 	endpoint, err := queries.GetEndpointByID(ctx, sid)
