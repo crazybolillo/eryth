@@ -4,15 +4,18 @@ import (
 	"context"
 	"fmt"
 	"github.com/crazybolillo/eryth/internal/handler"
+	"github.com/crazybolillo/eryth/internal/metric"
 	"github.com/crazybolillo/eryth/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
+	"time"
 )
 
 // @title Asterisk Administration API
@@ -57,6 +60,11 @@ func serve(ctx context.Context) error {
 		slog.Error("failed to establish database connection", slog.String("reason", err.Error()))
 		return err
 	}
+
+	metricsCtx, metricsCancel := context.WithCancel(ctx)
+	metric.WatchDbPool(metricsCtx, pool, time.Second*10)
+
+	defer metricsCancel()
 	defer pool.Close()
 
 	r := chi.NewRouter()
@@ -75,6 +83,8 @@ func serve(ctx context.Context) error {
 
 	phonebook := handler.Contact{Service: &service.Contact{Cursor: pool}}
 	r.Mount("/contacts", phonebook.Router())
+
+	r.Mount("/metrics", promhttp.Handler())
 
 	listen := os.Getenv("LISTEN_ADDR")
 	if listen == "" {
