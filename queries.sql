@@ -138,6 +138,10 @@ FROM
     ps_endpoints pe
 INNER JOIN
     ery_extension ee ON ee.endpoint_id = pe.sid
+WHERE CASE
+    WHEN @op = 'or' THEN (pe.callerid ILIKE '"' || @name || '" <%>') OR (ee.extension LIKE @phone)
+    ELSE (pe.callerid ILIKE '"' || @name || '" <%>' OR @name IS NULL) AND (ee.extension LIKE @phone OR @phone IS NULL)
+END
 LIMIT
     $1
 OFFSET
@@ -149,4 +153,8 @@ SELECT
 FROM
     ps_endpoints pe
 INNER JOIN
-    ery_extension ee ON ee.endpoint_id = pe.sid;
+    ery_extension ee ON ee.endpoint_id = pe.sid
+WHERE CASE
+    WHEN @op = 'or' THEN (pe.callerid ILIKE '"' || @name || '" <%>') OR (ee.extension LIKE @phone)
+    ELSE (pe.callerid ILIKE '"' || @name || '" <%>' OR @name IS NULL) AND (ee.extension LIKE @phone OR @phone IS NULL)
+END;
