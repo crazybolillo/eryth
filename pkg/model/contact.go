@@ -11,3 +11,9 @@ type ContactPage struct {
 	Retrieved int       `json:"retrieved"`
 	Contacts  []Contact `json:"contacts"`
 }
+
+type ContactPageFilter struct {
+	Name     string
+	Phone    string
+	Operator string
+}

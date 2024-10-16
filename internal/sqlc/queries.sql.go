@@ -18,10 +18,20 @@ FROM
     ps_endpoints pe
 INNER JOIN
     ery_extension ee ON ee.endpoint_id = pe.sid
+WHERE CASE
+    WHEN $1 = 'or' THEN (pe.callerid ILIKE '"' || $2 || '" <%>') OR (ee.extension LIKE $3)
+    ELSE (pe.callerid ILIKE '"' || $2 || '" <%>' OR $2 IS NULL) AND (ee.extension LIKE $3 OR $3 IS NULL)
+END
 `
 
-func (q *Queries) CountContacts(ctx context.Context) (int64, error) {
-	row := q.db.QueryRow(ctx, countContacts)
+type CountContactsParams struct {
+	Op    interface{} `json:"op"`
+	Name  pgtype.Text `json:"name"`
+	Phone pgtype.Text `json:"phone"`
+}
+
+func (q *Queries) CountContacts(ctx context.Context, arg CountContactsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countContacts, arg.Op, arg.Name, arg.Phone)
 	var count int64
 	err := row.Scan(&count)
 	return count, err
@@ -157,6 +167,10 @@ FROM
     ps_endpoints pe
 INNER JOIN
     ery_extension ee ON ee.endpoint_id = pe.sid
+WHERE CASE
+    WHEN $3 = 'or' THEN (pe.callerid ILIKE '"' || $4 || '" <%>') OR (ee.extension LIKE $5)
+    ELSE (pe.callerid ILIKE '"' || $4 || '" <%>' OR $4 IS NULL) AND (ee.extension LIKE $5 OR $5 IS NULL)
+END
 LIMIT
     $1
 OFFSET
@@ -164,8 +178,11 @@ OFFSET
 `
 
 type ListContactsParams struct {
-	Limit  int32 `json:"limit"`
-	Offset int32 `json:"offset"`
+	Limit  int32       `json:"limit"`
+	Offset int32       `json:"offset"`
+	Op     interface{} `json:"op"`
+	Name   pgtype.Text `json:"name"`
+	Phone  pgtype.Text `json:"phone"`
 }
 
 type ListContactsRow struct {
@@ -175,7 +192,13 @@ type ListContactsRow struct {
 }
 
 func (q *Queries) ListContacts(ctx context.Context, arg ListContactsParams) ([]ListContactsRow, error) {
-	rows, err := q.db.Query(ctx, listContacts, arg.Limit, arg.Offset)
+	rows, err := q.db.Query(ctx, listContacts,
+		arg.Limit,
+		arg.Offset,
+		arg.Op,
+		arg.Name,
+		arg.Phone,
+	)
 	if err != nil {
 		return nil, err
 	}

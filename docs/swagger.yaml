@@ -182,6 +182,20 @@ paths:
         in: query
         name: pageSize
         type: integer
+      - description: Filter by name. Asterisks can be used to represent any character(s)
+        in: query
+        name: name
+        type: string
+      - description: Filter by phone number. Asterisks can be used to represent any
+          character(s)
+        in: query
+        name: phone
+        type: string
+      - default: and
+        description: Whether to join filter values with AND/OR logic.
+        in: query
+        name: op
+        type: string
       produces:
       - application/json
       responses:
