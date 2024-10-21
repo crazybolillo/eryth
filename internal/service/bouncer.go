@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/crazybolillo/eryth/internal/db"
 	"github.com/crazybolillo/eryth/internal/sqlc"
 	"github.com/crazybolillo/eryth/pkg/model"
@@ -36,7 +37,7 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) model.Boun
 	if row.Callerid.Valid {
 		callerId = row.Callerid.String
 	} else {
-		callerId = endpoint
+		callerId = fmt.Sprintf(`"" <%s>`, endpoint)
 	}
 
 	return model.BouncerResponse{
