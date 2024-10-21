@@ -84,7 +84,7 @@ FROM
     ps_endpoints dest
 INNER JOIN
     ery_extension ee ON dest.sid = ee.endpoint_id
-INNER JOIN
+LEFT JOIN
     ps_endpoints src ON src.id = $1
 WHERE
     ee.extension = $2

@@ -32,9 +32,16 @@ func (b *Bouncer) Check(ctx context.Context, endpoint, dialed string) model.Boun
 		return result
 	}
 
+	var callerId string
+	if row.Callerid.Valid {
+		callerId = row.Callerid.String
+	} else {
+		callerId = endpoint
+	}
+
 	return model.BouncerResponse{
 		Allow:       true,
 		Destination: row.ID,
-		CallerID:    row.Callerid.String,
+		CallerID:    callerId,
 	}
 }
