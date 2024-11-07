@@ -158,3 +158,26 @@ WHERE CASE
     WHEN @op = 'or' THEN (pe.callerid ILIKE '"' || @name || '" <%>') OR (ee.extension LIKE @phone)
     ELSE (pe.callerid ILIKE '"' || @name || '" <%>' OR @name IS NULL) AND (ee.extension LIKE @phone OR @phone IS NULL)
 END;
+
+-- name: ListCallRecords :many
+SELECT
+    id,
+    COALESCE(accountcode, src) AS origin,
+    COALESCE(userfield, dst) AS destination,
+    dcontext AS context,
+    cstart AS call_start,
+    CASE
+        WHEN answer = '1970-01-01 00:00:00' THEN NULL
+        ELSE answer
+    END AS answer,
+    cend AS call_end,
+    duration,
+    billsec
+FROM
+    cdr
+ORDER BY
+    cstart DESC
+LIMIT $1 OFFSET $2;
+
+-- name: CountCallRecords :one
+SELECT COUNT(*) FROM cdr;

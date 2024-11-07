@@ -15,6 +15,38 @@ definitions:
       destination:
         type: string
     type: object
+  model.CallRecord:
+    properties:
+      answer:
+        type: string
+      billsec:
+        type: integer
+      context:
+        type: string
+      duration:
+        type: integer
+      end:
+        type: string
+      from:
+        type: string
+      id:
+        type: integer
+      start:
+        type: string
+      to:
+        type: string
+    type: object
+  model.CallRecordPage:
+    properties:
+      records:
+        items:
+          $ref: '#/definitions/model.CallRecord'
+        type: array
+      retrieved:
+        type: integer
+      total:
+        type: integer
+    type: object
   model.Contact:
     properties:
       id:
@@ -169,6 +201,29 @@ paths:
         provide details on how
       tags:
       - bouncer
+  /cdr:
+    get:
+      parameters:
+      - default: 0
+        description: Zero based page to fetch
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Max amount of results to be returned
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CallRecordPage'
+      summary: List call detail records.
+      tags:
+      - cdr
   /contacts:
     get:
       parameters:
