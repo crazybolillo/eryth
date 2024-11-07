@@ -11,6 +11,17 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const countCallRecords = `-- name: CountCallRecords :one
+SELECT COUNT(*) FROM cdr
+`
+
+func (q *Queries) CountCallRecords(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, countCallRecords)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const countContacts = `-- name: CountContacts :one
 SELECT
     COUNT(*)
@@ -158,6 +169,74 @@ func (q *Queries) GetEndpointByID(ctx context.Context, sid int32) (GetEndpointBy
 		&i.MediaEncryption,
 	)
 	return i, err
+}
+
+const listCallRecords = `-- name: ListCallRecords :many
+SELECT
+    id,
+    COALESCE(accountcode, src) AS origin,
+    COALESCE(userfield, dst) AS destination,
+    dcontext AS context,
+    cstart AS call_start,
+    CASE
+        WHEN answer = '1970-01-01 00:00:00' THEN NULL
+        ELSE answer
+    END AS answer,
+    cend AS call_end,
+    duration,
+    billsec
+FROM
+    cdr
+ORDER BY
+    cstart DESC
+LIMIT $1 OFFSET $2
+`
+
+type ListCallRecordsParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+type ListCallRecordsRow struct {
+	ID          int64            `json:"id"`
+	Origin      pgtype.Text      `json:"origin"`
+	Destination pgtype.Text      `json:"destination"`
+	Context     pgtype.Text      `json:"context"`
+	CallStart   pgtype.Timestamp `json:"call_start"`
+	Answer      interface{}      `json:"answer"`
+	CallEnd     pgtype.Timestamp `json:"call_end"`
+	Duration    pgtype.Int4      `json:"duration"`
+	Billsec     pgtype.Int4      `json:"billsec"`
+}
+
+func (q *Queries) ListCallRecords(ctx context.Context, arg ListCallRecordsParams) ([]ListCallRecordsRow, error) {
+	rows, err := q.db.Query(ctx, listCallRecords, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListCallRecordsRow
+	for rows.Next() {
+		var i ListCallRecordsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Origin,
+			&i.Destination,
+			&i.Context,
+			&i.CallStart,
+			&i.Answer,
+			&i.CallEnd,
+			&i.Duration,
+			&i.Billsec,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const listContacts = `-- name: ListContacts :many

@@ -84,6 +84,9 @@ func serve(ctx context.Context) error {
 	phonebook := handler.Contact{Service: &service.Contact{Cursor: pool}}
 	r.Mount("/contacts", phonebook.Router())
 
+	cdr := handler.Cdr{Service: &service.Cdr{Cursor: pool}}
+	r.Mount("/cdr", cdr.Router())
+
 	r.Mount("/metrics", promhttp.Handler())
 
 	listen := os.Getenv("LISTEN_ADDR")
