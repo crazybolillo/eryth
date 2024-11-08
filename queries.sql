@@ -181,3 +181,16 @@ LIMIT $1 OFFSET $2;
 
 -- name: CountCallRecords :one
 SELECT COUNT(*) FROM cdr;
+
+-- name: ListLocations :many
+SELECT
+    id,
+    endpoint,
+    user_agent,
+    uri
+FROM
+    ps_contacts
+LIMIT $1 OFFSET $2;
+
+-- name: CountLocations :one
+SELECT COUNT(*) FROM ps_contacts;

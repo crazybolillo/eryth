@@ -118,6 +118,28 @@ definitions:
       sid:
         type: integer
     type: object
+  model.Location:
+    properties:
+      address:
+        type: string
+      endpoint:
+        type: string
+      id:
+        type: string
+      user_agent:
+        type: string
+    type: object
+  model.LocationPage:
+    properties:
+      locations:
+        items:
+          $ref: '#/definitions/model.Location'
+        type: array
+      retrieved:
+        type: integer
+      total:
+        type: integer
+    type: object
   model.NewEndpoint:
     properties:
       accountCode:
@@ -376,4 +398,27 @@ paths:
       summary: Update the specified endpoint. Omitted or null fields will remain unchanged.
       tags:
       - endpoints
+  /locations:
+    get:
+      parameters:
+      - default: 0
+        description: Zero based page to fetch
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Max amount of results to be returned
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LocationPage'
+      summary: List endpoint locations. This is the same as PJSIP contacts.
+      tags:
+      - location
 swagger: "2.0"

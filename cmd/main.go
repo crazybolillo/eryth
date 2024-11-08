@@ -87,6 +87,9 @@ func serve(ctx context.Context) error {
 	cdr := handler.Cdr{Service: &service.Cdr{Cursor: pool}}
 	r.Mount("/cdr", cdr.Router())
 
+	location := handler.Location{Service: &service.Location{Cursor: pool}}
+	r.Mount("/locations", location.Router())
+
 	r.Mount("/metrics", promhttp.Handler())
 
 	listen := os.Getenv("LISTEN_ADDR")
