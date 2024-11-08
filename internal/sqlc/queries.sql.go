@@ -59,6 +59,17 @@ func (q *Queries) CountEndpoints(ctx context.Context) (int64, error) {
 	return count, err
 }
 
+const countLocations = `-- name: CountLocations :one
+SELECT COUNT(*) FROM ps_contacts
+`
+
+func (q *Queries) CountLocations(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, countLocations)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const deleteAOR = `-- name: DeleteAOR :exec
 DELETE FROM ps_aors WHERE id = $1
 `
@@ -335,6 +346,54 @@ func (q *Queries) ListEndpoints(ctx context.Context, arg ListEndpointsParams) ([
 			&i.Callerid,
 			&i.Context,
 			&i.Extension,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listLocations = `-- name: ListLocations :many
+SELECT
+    id,
+    endpoint,
+    user_agent,
+    uri
+FROM
+    ps_contacts
+LIMIT $1 OFFSET $2
+`
+
+type ListLocationsParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+type ListLocationsRow struct {
+	ID        string      `json:"id"`
+	Endpoint  pgtype.Text `json:"endpoint"`
+	UserAgent pgtype.Text `json:"user_agent"`
+	Uri       pgtype.Text `json:"uri"`
+}
+
+func (q *Queries) ListLocations(ctx context.Context, arg ListLocationsParams) ([]ListLocationsRow, error) {
+	rows, err := q.db.Query(ctx, listLocations, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListLocationsRow
+	for rows.Next() {
+		var i ListLocationsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Endpoint,
+			&i.UserAgent,
+			&i.Uri,
 		); err != nil {
 			return nil, err
 		}
