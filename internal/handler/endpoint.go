@@ -117,6 +117,7 @@ func (e *Endpoint) list(w http.ResponseWriter, r *http.Request) {
 // @Summary Create a new endpoint.
 // @Accept json
 // @Param payload body model.NewEndpoint true "Endpoint's information"
+// @Produce json
 // @Success 201 {object} model.Endpoint
 // @Failure 400
 // @Failure 500
@@ -184,7 +185,8 @@ func (e *Endpoint) delete(w http.ResponseWriter, r *http.Request) {
 // @Summary Update the specified endpoint. Omitted or null fields will remain unchanged.
 // @Param sid path int true "Sid of the endpoint to be updated"
 // @Param payload body model.PatchedEndpoint true "Endpoint's fields to update"
-// @Success 200 {object} model.PatchedEndpoint
+// @Produce json
+// @Success 200 {object} model.Endpoint
 // @Failure 400
 // @Failure 404
 // @Failure 500

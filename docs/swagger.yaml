@@ -320,6 +320,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.NewEndpoint'
+      produces:
+      - application/json
       responses:
         "201":
           description: Created
@@ -384,11 +386,13 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.PatchedEndpoint'
+      produces:
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.PatchedEndpoint'
+            $ref: '#/definitions/model.Endpoint'
         "400":
           description: Bad Request
         "404":
